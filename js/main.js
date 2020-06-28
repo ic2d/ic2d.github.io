@@ -1,8 +1,3 @@
-/* ===================================================================
- * Epitome - Main JS
- *
- * ------------------------------------------------------------------- */
-
 (function($) {
 
     "use strict";
@@ -11,36 +6,18 @@
         scrollDuration : 800, // smoothscroll duration
         mailChimpURL   : ''   // mailchimp url
     },
-
     $WIN = $(window);
-
-    // Add the User Agent to the <html>
-    // will be used for IE10/IE11 detection (Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; rv:11.0))
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);
-
-
-   /* Preloader
-    * -------------------------------------------------- */
-    var ssPreloader = function() {
-        
+    var ssPreloader = function() {        
         $("html").addClass('ss-preload');
-
         $WIN.on('load', function() {
-
-            //force page scroll position to top at page refresh
             $('html, body').animate({ scrollTop: 0 }, 'normal');
-
-            // will first fade out the loading animation 
             $("#loader").fadeOut("slow", function() {
-                // will fade out the whole DIV that covers the website.
                 $("#preloader").delay(300).fadeOut("slow");
             }); 
-            
-            // for hero content animations 
             $("html").removeClass('ss-preload');
-            $("html").addClass('ss-loaded');
-        
+            $("html").addClass('ss-loaded');        
         });
     };
 
@@ -271,7 +248,6 @@
    /* Initialize
     * ------------------------------------------------------ */
     (function clInit() {
-
         ssPreloader();
         ssMenuOnScrolldown();
         ssMobileMenu();
@@ -282,7 +258,42 @@
         ssSmoothScroll();
         ssAlertBoxes();
         ssAOS();
-
     })();
+
+    $("#btn-cancelForm").on("click", function(event){
+        event.preventDefault();
+
+        $('#name').val('');
+        $('#subject').val('');
+        $('#message').val('');
+        $('#email').val('');
+    });
+
+    $(function(){
+        var form = $('#contactForm');
+
+        $(form).submit(function(event){
+            event.preventDefault();
+
+            var formData = $(form).serialize();
+            $.ajax({
+                type: 'POST',
+                url: $(form).attr('action'),
+                data: formData
+            })
+            .done(function(response){
+                $('#sendmessage').show();
+
+                $('#name').val('');
+                $('#subject').val('');
+                $('#message').val('');
+                $('#email').val('');
+            })
+            .fail(function(data){
+                $('#sendmessage').css("display", "none");
+                $('#failmessage').show();
+            })
+        });
+    });
 
 })(jQuery);
