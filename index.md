@@ -266,7 +266,7 @@
 
     <!-- works
     ================================================== -->
-    <section id="works" class="s-works target-section">
+    <!-- <section id="works" class="s-works target-section">
         <div class="row heading-block heading-block--center" data-aos="fade-up">
             <div class="column large-full">
                 <h2 class="section-heading section-heading--centerbottom">Selected Works</h2>
@@ -275,7 +275,7 @@
                     check them out.
                 </p>
             </div>
-        </div> <!-- end heading-block -->
+        </div> 
 
         <div class="masonry-wrap">
 
@@ -309,7 +309,7 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
+                </div>
 
                 <div class="masonry__brick" data-aos="fade-up">
                     <div class="item-folio">
@@ -336,7 +336,7 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
+                </div>
 
                 <div class="masonry__brick" data-aos="fade-up">
                     <div class="item-folio">
@@ -364,7 +364,7 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
+                </div> 
 
                 <div class="masonry__brick" data-aos="fade-up">
                     <div class="item-folio">
@@ -391,7 +391,7 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
+                </div>
 
                 <div class="masonry__brick" data-aos="fade-up">
                     <div class="item-folio">
@@ -417,7 +417,7 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
+                </div>
 
                 <div class="masonry__brick" data-aos="fade-up">
                     <div class="item-folio">
@@ -444,10 +444,10 @@
                                 dolorem corrupti neque nisi.</p>
                         </div>
                     </div>
-                </div> <!-- end masonry__brick -->
-            </div> <!-- end masonry -->
-        </div> <!-- end masonry-wrap -->
-    </section> <!-- end s-work -->
+                </div>
+            </div>
+        </div>
+    </section>  -->
 
 
 
