@@ -147,7 +147,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Maurício Eiji Nakai</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-person-512.png">
+                                    <img class="img-fluid" src="https://i.pinimg.com/236x/7e/bc/a0/7ebca0515ca909fc49b33c3ae76d964d.jpg">
                                 </div>
                                 <p class="card-text text-center"><a href="http://lattes.cnpq.br/7376345732096655" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
