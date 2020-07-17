@@ -652,9 +652,9 @@
         </div>
 
         <div class="row contact-infos d-flex" data-aos="fade-up" data-aos-anchor=".contact-main">
-            <!-- <div class="col-md-5 contact-phone">
-                <h4>Nosso Email</h4>
-            </div> -->
+            <div class="col-md-5 contact-phone">
+                <!-- <h4>Nosso Email</h4> -->
+            </div>
             <div class="col-md-7 contact-social d-flex justify-content-end justify-content-between">
                 <div class="d-flex flex-column logo-utfpr">
                     <a href="http://portal.utfpr.edu.br/home" target="_BLANK"><img src="./images/logo-utfpr.png"
