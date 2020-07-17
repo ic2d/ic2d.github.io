@@ -26,7 +26,7 @@
     <header class="s-header">
         <div class="header-logo">
             <a class="site-logo" href="index.html">
-                <img src="images/logo.svg" alt="Homepage">
+                <!-- <img src="images/logo.svg" alt="Homepage"> -->
             </a>
         </div>
 
@@ -35,14 +35,16 @@
                 <li class="current"><a class="smoothscroll" href="#intro">Home</a></li>
                 <li><a class="smoothscroll" href="#about">Sobre o Grupo</a></li>
                 <li><a class="smoothscroll" href="#services">Projetos</a></li>
+                <li><a class="smoothscroll" href="#partners">Parceiros</a></li>
                 <li><a class="smoothscroll" href="#contact">Entre em Contato</a></li>
             </ul>
 
             <ul class="header-social">
-                <li><a href="#0"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                <li><a href="#0"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a href="#0"><i class="fab fa-dribbble" aria-hidden="true"></i></a></li>
-                <li><a href="#0"><i class="fab fa-behance" aria-hidden="true"></i></a></li>
+                <!-- <li><a href="#0"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                <li><a href="#0"><i class="fab fa-twitter" aria-hidden="true"></i></a></li> -->
+                <li><a href="https://github.com/ic2d" target="_BLANK"><i class="fab fa-github"
+                            aria-hidden="true"></i></a></li>
+
             </ul>
         </nav>
         <a class="header-menu-toggle" href="#"><span>Menu</span></a>
@@ -61,9 +63,8 @@
                     Saiba mais
                 </a>
             </div>
-            <div class="intro-grid"></div>
-            <div class="intro-pic"></div>
-
+            <!-- <div class="intro-grid"></div>
+            <div class="intro-pic"></div> -->
         </div>
     </section>
     <section id="about" class="s-about target-section">
@@ -78,7 +79,6 @@
                     <p class="lead">
                         Grupo de Estudos e Pesquisa em Inteligência Computacional e Ciência de Dados
                     </p>
-
                     <p>
                         A IC²D foi fundada em 2020 por um grupo da professores da <abbr
                             title="Universidade Tecnológica Federal do Paraná">UTFPR</abbr> campus Apucarana
@@ -87,10 +87,10 @@
                         dados, inteligência artificial e, sua divulgação para uso profissional ou para leigos.
                     </p>
                 </div>
-                <div class="column large-half about-us__gpimg">
+                <!--<div class="column large-half about-us__gpimg">
                     <img src="https://image.freepik.com/fotos-gratis/conceito-comunidade-com-grupo-pessoas_23-2147993385.jpg"
                         alt="">
-                </div>
+                </div> -->
             </div>
 
             <!-- <div class="row about-me__buttons">
@@ -100,13 +100,13 @@
             </div> -->
         </div> <!-- end about-us -->
 
-        <div class="our_team">
+        <div class="our_team mb-5">
             <div class="row heading-block" data-aos="fade-up">
                 <div class="column large-full">
                     <h2 class="section-heading">Nossa Equipe</h2>
                 </div>
             </div>
-            <div class="container">
+            <div class="container" data-aos="fade-up">
                 <h1 class="text-center">Professores</h1>
                 <div class="d-flex justify-content-between flex-wrap">
                     <div class="d-flex flex-column flex-fill container-professor">
@@ -114,9 +114,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Daniel Prado de Campos</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4473927Z3">
+                                    <img class="img-fluid"
+                                        src="https://ic2d.github.io/images/professors/danielprado.gif">
                                 </div>
-                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/2260564602839139" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
+                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/2260564602839139"
+                                        target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
                         </div>
                     </div>
@@ -125,9 +127,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Fábio Irigon Pereira</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4701205E8">
+                                    <img class="img-fluid"
+                                        src="https://ic2d.github.io/images/professors/fabioirigon.gif">
                                 </div>
-                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/2320975517821477" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
+                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/2320975517821477"
+                                        target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
                         </div>
                     </div>
@@ -136,9 +140,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Luiz Fernando Carvalho</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4385920H0">
+                                    <img class="img-fluid"
+                                        src="https://ic2d.github.io/images/professors/luizfernando.gif">
                                 </div>
-                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/0665079937865380" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
+                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/0665079937865380"
+                                        target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
                         </div>
                     </div>
@@ -147,9 +153,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Maurício Eiji Nakai</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="https://0.academia-photos.com/9907473/3186120/6411575/s200_mauricio_eiji.nakai.jpg">
+                                    <img class="img-fluid"
+                                        src="https://ic2d.github.io/images/professors/mauricioeiji.gif">
                                 </div>
-                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/7376345732096655" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
+                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/7376345732096655"
+                                        target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
                         </div>
                     </div>
@@ -158,16 +166,127 @@
                             <div class="card-body">
                                 <h5 class="card-title">Prof. Dr. Rafael Gomes Mantovani</h5>
                                 <div class="professor-image">
-                                    <img class="img-fluid" src="http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4293883Y1">
+                                    <img class="img-fluid"
+                                        src="https://ic2d.github.io/images/professors/rafaelgomes.gif">
                                 </div>
-                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/3753471203485400" target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
+                                <p class="card-text text-center"><a href="http://lattes.cnpq.br/3753471203485400"
+                                        target="_BLANK" style="color: black;"> Currículo Lattes</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-                
-        </div> <!-- end about-experience -->
+        </div>
+
+    <!--<div class="about-experience mt-5">
+            <div class="row heading-block" data-aos="fade-up">
+                <div class="column large-full">
+                    <h2 class="section-heading">Publicações</h2>
+                </div>
+            </div>
+
+            <div class="row about-experience__timeline">
+
+                <div class="column large-half tab-full" data-aos="fade-up">
+                    <div class="timeline">
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">December 2019</p>
+                                <h3 class="item-title">Awesome Title</h3>
+                                <h5>Lead Designer</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">July 2017 - June 2018</p>
+                                <h3 class="item-title">Super Cool Agency</h3>
+                                <h5>Frontend Developer</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">March 2016 - June 2017</p>
+                                <h3 class="item-title">Epic Design Studio</h3>
+                                <h5>Frontend Developer</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="column large-half tab-full" data-aos="fade-up">
+                    <div class="timeline">
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">July 2011 - June 2015</p>
+                                <h3 class="item-title">University of Life</h3>
+                                <h5>Master Degree</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">July 2009 - June 2011</p>
+                                <h3 class="item-title">State Design University</h3>
+                                <h5>Bachelor Degree</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">July 2005 - June 2009</p>
+                                <h3 class="item-title">School of Hard Knocks</h3>
+                                <h5>Bachelor Degree</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Lorem ipsum Occaecat do esse ex et dolor culpa nisi ex in magna consectetur nisi
+                                    cupidatat laboris esse eiusmod deserunt aute do quis velit esse sed Ut proident
+                                    cupidatat nulla esse cillum laborum occaecat nostrud sit dolor incididunt amet est
+                                    occaecat nisi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --><!-- end papers -->
 
     </section> <!-- end s-about -->
 
@@ -264,15 +383,27 @@
         </div>
     </section>
 
+    <section id="partners" class="s-partners target-section">
+        <div class="row heading-block" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-heading">Parceiros</h2>
+            </div>
+        </div>
+        <div class="d-flex row justify-content-center" data-aos="fade-up">
+            <div class="d-flex flex-column justify-content-center partner-row">
+                <a href="http://www.iapar.br" target="_BLANK"><img src="./images/partners/iapar_400x400.jpg" alt=""></a>
+            </div>
+        </div>
+    </section>
+
     <!-- works
     ================================================== -->
     <!-- <section id="works" class="s-works target-section">
         <div class="row heading-block heading-block--center" data-aos="fade-up">
             <div class="column large-full">
-                <h2 class="section-heading section-heading--centerbottom">Selected Works</h2>
+                <h2 class="section-heading section-heading--centerbottom">Eventos</h2>
                 <p class="section-desc">
-                    Here are some of my selected works I have done lately. Feel free to
-                    check them out.
+                    Confira alguns dos eventos aos quais o grupo IC²D esteve presente
                 </p>
             </div>
         </div> 
@@ -521,17 +652,22 @@
         </div>
 
         <div class="row contact-infos d-flex" data-aos="fade-up" data-aos-anchor=".contact-main">
-            <div class="col-md-5 contact-phone">
+            <!-- <div class="col-md-5 contact-phone">
                 <h4>Nosso Email</h4>
-                <a href="mailto:ic2d@utfpr.edu.br">ic2d@utfpr.edu.br</a>
-            </div>
-            <div class="col-md-7 contact-social d-flex justify-content-end">
+            </div> -->
+            <div class="col-md-7 contact-social d-flex justify-content-end justify-content-between">
+                <div class="d-flex flex-column logo-utfpr">
+                    <a href="http://portal.utfpr.edu.br/home" target="_BLANK"><img src="./images/logo-utfpr.png"
+                            class="img-fluid" alt="Universidade Tecnológica Federal do Paraná"></a>
+                </div>
                 <div class="d-flex flex-column">
                     <h4>Social</h4>
                     <ul>
-                        <li><a href="#0" title="Facebook"><i class="fab fa-facebook"></i></a></li>
+                        <!-- <li><a href="#0" title="Facebook"><i class="fab fa-facebook"></i></a></li>
                         <li><a href="#0" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#0" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#0" title="Instagram"><i class="fab fa-instagram"></i></a></li> -->
+                        <li><a href="https://github.com/ic2d" target="_BLANK" title="Github"><i
+                                    class="fab fa-github"></i></a></li>
                     </ul>
                 </div>
             </div>

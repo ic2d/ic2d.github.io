@@ -2187,6 +2187,18 @@ input::-moz-focus-inner {
   padding-left: 40px;
 }
 
+.about-experience__timeline {
+  margin-top: 1.6rem;
+}
+
+.about-experience__timeline .column:first-child {
+  padding-right: 40px;
+}
+
+.about-experience__timeline .column:last-child {
+  padding-left: 40px;
+}
+
 .timeline {
   padding-top: 4.8rem;
   position: relative;
@@ -2202,7 +2214,7 @@ input::-moz-focus-inner {
   left: 0;
   top: 0;
 }
-
+/* 
 .timeline::after {
   content: "";
   display: block;
@@ -2212,7 +2224,7 @@ input::-moz-focus-inner {
   position: absolute;
   left: 1px;
   top: 0;
-}
+} */
 
 .timeline__icon-wrap {
   display: block;
@@ -3591,4 +3603,38 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
 
 .professor-image > img {
   width: 100%;
+  min-height: 200px;
+}
+
+.logo-utfpr{
+  width: 200px;
+}
+
+
+
+/* ===================================================================
+ * # Partners
+ *
+ * ------------------------------------------------------------------- */
+ .s-partners {
+  padding-top: 19.2rem;
+  padding-bottom: 16.8rem;
+  background-color: #ffffff;
+}
+
+.s-partners .row {
+  max-width: 1140px;
+}
+
+.s-partners > [class*="partners-"] {
+  margin-bottom: 15.2rem;
+}
+
+.s-partners > [class*="partners-"]:last-child {
+  margin-bottom: 0;
+}
+
+.partner-row > a > img {
+  max-width: 250px;
+  height: auto;
 }
