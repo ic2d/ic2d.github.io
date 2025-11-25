@@ -1,0 +1,55 @@
+---
+import '@styles/global.css';
+import Logo from '@assets/imgs/logo.svg';
+
+/**
+ * Componente representativo do cabeçalho da página inicial.
+ * Inclui o logotipo do grupo, nome completo e afiliação.
+ */
+---
+
+<div class="homepage-header">
+    <Logo id="homepage-logo" aria-label="Logo do grupo de pesquisa"/><br/>
+    <b>GRUPO DE ESTUDOS E PESQUISA EM INTELIGÊNCIA COMPUTACIONAL E CIÊNCIA DE DADOS</b><br/>
+    <p>Engenharia de Computação, Universidade Tecnológica Federal do Paraná - Campus Apucarana</p>
+</div>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.homepage-header{
+    justify-items: center;
+    text-align: center;
+    margin: 12rem 5rem 1rem 5rem;
+}
+
+.homepage-header b{
+    color: var(--color-text-light);
+    font-size: var(--text-md);
+}
+
+.homepage-header p{
+    color: var(--color-text-light);
+    font-size: var(--text-size);
+}
+
+#homepage-logo{
+    width: 56rem;
+    fill: var(--color-1);
+}
+
+/* Responsividade */
+@media screen and (max-width: 924px) {
+    #homepage-logo{
+        width: 70%;
+    }
+    .homepage-header b{
+        font-size: var(--text-size);
+    }
+    .homepage-header p{
+        font-size: var(--text-sm);
+    }
+}
+
+</style>

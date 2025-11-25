@@ -1,0 +1,70 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente que representa o cabeçalho de uma seção da página, com titulação obrigatória.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.title] - O título da seção.
+ * @param {string} [props.subtitle] - O subtítulo da seção (opcional).
+ * @param {string} [props.lead] - Um texto introdutório ou lead para a seção (opcional).
+ */
+interface Props{
+    title: string;
+    subtitle?: string;
+    lead?: string;
+}
+
+const { title, subtitle = "", lead = "" } = Astro.props;
+---
+
+<div class="row section-head">
+    <hgroup class=`column ${lead? "large-3 medium-12" : ""}`>
+        <h2>{title}</h2>
+        <!-- Renderização condicional do subtítulo -->
+        {subtitle ? <p class="desc">{subtitle}</p> : null}
+    </hgroup>
+
+    <!-- Renderização condicional do lead -->
+    {lead ? 
+        <div class="column large-8 medium-12 align-x-right">
+            <p class="lead">
+            {lead}
+            </p>
+        </div> 
+        : 
+        null
+    }
+</div>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.section-head {
+    margin-bottom: var(--vspace-1_5);
+    width: var(--width-full);
+    position: relative;
+}
+
+/* Cabeçalho */
+.section-head h2 {
+    font-size: var(--text-xl);
+    line-height: var(--vspace-1_25);
+    margin-top: 0;
+    margin-bottom: calc(0.125 * var(--space));
+}
+:global(.s-dark) .section-head h2 {
+    color: var(--color-1);
+}
+
+.section-head .desc {
+    color: var(--color-text);
+    font-size: var(--text-size);
+    line-height: var(--vspace-0_75);
+}
+
+/* Lead */
+:global(.s-dark) .section-head .lead {
+    color: var(--color-text-light);
+}
+</style>

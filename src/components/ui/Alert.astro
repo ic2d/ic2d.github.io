@@ -1,0 +1,85 @@
+---
+import '@styles/global.css';
+---
+
+<!-- =============================================================================================== -->
+
+<script>
+class AlertBox extends HTMLElement{
+    connectedCallback(){
+        // Garante estilo base
+        this.classList.add('h-full-width');
+        // Se não tiver conteúdo, remove
+        if (!this.innerHTML.trim()) {
+            this.remove();
+        }// if
+        // Ativa o botão de fechar
+        const close_btn = this.querySelector('.closebtn');
+        close_btn?.addEventListener('click',()=>{
+            this.remove();
+        });
+    }// connectedCallback
+
+}// Alert
+
+if(!customElements.get('alert-box')){
+    customElements.define('alert-box',AlertBox);
+}// if
+</script>
+
+<!-- =============================================================================================== -->
+
+<style is:global>
+/* Geral */
+.alert {
+    width: var(--width-full);
+    padding: 20px;
+    background-color: var(--color-notice); /* Red */
+    color: var(--color-notice-content);
+    margin-bottom: 15px;
+}
+
+.alert.error{
+    background-color: var(--color-error);
+    color: var(--color-error-content);
+}
+
+.alert.success{
+    background-color: var(--color-success);
+    color: var(--color-success-content);
+}
+
+.alert.info{
+    background-color: var(--color-info);
+    color: var(--color-info-content);
+}
+
+
+/* Botão de Fechamento */
+.alert .closebtn {
+  margin-left: 15px;
+  color: var(--color-notice-content);
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+
+    &.error{
+        color: var(--color-error-content);
+    }
+
+    &.success{
+        color: var(--color-success-content);
+    }
+
+    &.info{
+        color: var(--color-info-content);
+    }
+    
+    &:hover {
+        color: var(--color-black);
+    }
+}
+</style>

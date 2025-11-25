@@ -1,0 +1,85 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer , HomepageHeader } from '@components/layout';
+import { Section , Statistics, ContactForm, PartnershipCarousel, TwoColumnArticle, AwardsCarousel } from '@components/blocks';
+import { ProjectModal, ProjectModalBlock} from '@components/projects';
+import { Member, MemberBlock } from '@components/members';
+
+import { professors, projects, statistics_itens} from '@db';
+
+/* Filtra os projetos, selecionando apenas os projetos ativos para exibir nos modais */
+const active_projects = projects.filter(proj=>(proj.status == "Ativo"));
+
+/**
+ * Página inicial do site, contendo uma visão geral sobre o grupo de pesquisa, membros, estatísticas,
+ * projetos em andamento, conquistas, parceiros e um formulário de contato.
+ * 
+ * @remarks
+ * Os dados dos membros e projetos são obtidos da base de dados.
+ */
+---
+
+<BaseLayout>
+	<Header/>
+
+	<HomepageHeader/>
+	
+	<hr>
+	<Section class="s-dark">
+		<TwoColumnArticle title='Quem Somos'>
+			<p>
+				O Grupo de Estudos e Pesquisa em Inteligência Computacional e Ciência de Dados (iC²D) foi fundado em 
+				2020 por um grupo de professores da UTFPR – campus Apucarana, com o objetivo de fomentar e desenvolver 
+				pesquisas em novas tecnologias, ferramentas e metodologias nas áreas de computação, ciência de dados e 
+				inteligência artificial, bem como divulgá-las para uso profissional ou para o público leigo.
+			</p>
+		</TwoColumnArticle>
+	</Section>
+
+	<hr/>
+	<Section title='Nossa Equipe' class="s-dark">
+		<MemberBlock>
+		<!-- Renderização automática da lista de professores associados ao grupo -->
+		{professors.map(professor => (
+			<Member 
+				name_prefix={`Prof. ${professor.academic_title}`} 
+				name={professor.name} 
+				subtitle={professor.membership.role} 
+				img_src={professor.img_src}
+				social_media={professor.social_media.filter(sm => (sm.url))}/>
+		))}
+		</MemberBlock>
+	</Section>
+
+	<Statistics itens={statistics_itens}/>
+
+	<Section title='Projetos' lead='Descubra os projetos que estamos desenvolvendo, refletindo nosso\
+	compromisso com a inovação, a qualidade técnica e a colaboração em equipe.' class="s-dark">
+		<ProjectModalBlock>
+			<!-- Renderização automática dos modais dos projetos em andamento -->
+			{active_projects.map((proj, i)=>(
+				<ProjectModal project={proj} id={`proj-${i}`}/>
+			))}
+		</ProjectModalBlock>
+	</Section>
+	
+	<hr/>
+	<Section class="s-dark" title='Premiações' lead='Conheça as conquistas e reconhecimentos obtidos pelos membros do iC²D em eventos,\
+	 competições e iniciativas acadêmicas, destacando a excelência e o impacto do nosso grupo de pesquisa.'>
+		<AwardsCarousel/>
+	</Section>
+	
+	<hr/>
+	<PartnershipCarousel/>
+
+	<hr/>
+	<Section class="s-dark" title='Contato' lead='Ficou interessado? Entre em contato conosco para tirar suas dúvidas ou conversar conosco!'>
+		<div class="column">
+			<ContactForm/>
+		</div>
+	</Section>
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->

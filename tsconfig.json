@@ -1,0 +1,21 @@
+{
+  // Herda as configs recomendadas pelo Astro com checagem estrita de tipos.
+  // Doc: https://docs.astro.build/pt-br/editor-tools/#typescript
+  "extends": "astro/tsconfigs/strict",
+  // Define quais arquivos devem ser incluídos no TypeScript.
+  "include": [".astro/types.d.ts", "**/*"],
+  // Define quais pastas/arquivos devem ser ignorados.
+  "exclude": ["dist"],
+  // Opções de compilação
+  "compilerOptions": {
+    "baseUrl": ".", // Permite resolver imports relativos a partir da raiz do projeto.
+    "paths": { // Aliases usados em conjunto com a config do Vite (astro.config.mjs).
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts": ["src/layouts"],
+      "@scripts/*": ["src/scripts/*"],
+      "@styles/*": ["src/styles/*"],
+      "@db": ["src/assets/db"],
+    }// paths
+  }// compilerOptions
+}

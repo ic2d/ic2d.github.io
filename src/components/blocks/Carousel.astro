@@ -1,0 +1,227 @@
+---
+import '@styles/global.css';
+
+/**
+ * Componente representativo de um carrossel, cujo elementos podem ser arrastados horizontalmente.
+ * Somente quando há overflow dos elementos, o dragging e marcadores são ativados.
+ * Os elementos filhos devem ser passados como <li class="carousel-slide">.
+ */
+
+const id = `carousel-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<ul class="carousel carousel-scroll-markers carousel-scroll-buttons"
+    style=`--id: --${id};`>
+    <slot/>
+</ul>
+
+<!-- =============================================================================================== -->
+
+<script>
+const carousels = document.querySelectorAll(".carousel") as NodeListOf<HTMLUListElement>;
+
+/**
+ * Lógica para o carrossel funcionar com dragging para o lado 
+ */
+let isDown = false;
+let startX: number;
+let scrollLeft: number;
+
+
+carousels.forEach(carousel=>{
+    /** 
+     * Quando o mouse é apertado, começa a monitorar 
+     */
+    carousel.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+    
+    /* 
+    * Ajusta o carrossel conforme o movimento do mouse 
+    */
+    carousel.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2;
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    /**
+     * Para quando o movimento do mouse é interrompido ou sai do carrossel 
+     */
+    carousel.addEventListener("mouseleave", () => {
+        isDown = false;
+    });
+    carousel.addEventListener("mouseup", () => {
+        isDown = false;
+    });
+
+})
+
+/**
+ * Controla a lógica do carrossel, ativando o draging apenas quando há overflow dos elementos.
+ */
+function updateScrollMarkers() {
+    carousels.forEach(carousel=>{
+        if (carousel.scrollWidth > carousel.clientWidth) {
+            carousel.classList.add("overflow");
+        } else {
+            carousel.classList.remove("overflow");
+        }// if-else
+    })
+}// updateScrollMarkers
+
+/**
+ * Inicializa a lógica do carrossel e adiciona o listener de resize.
+ */
+updateScrollMarkers();
+window.addEventListener("resize", updateScrollMarkers);
+
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+
+/* Geral */
+.carousel {
+    display: flex;
+    width: 100vw;
+    padding: 10px;
+    margin: 0;
+    gap: 4vw;
+
+    user-select: none;
+    justify-content: center;
+
+    /* Fallback padrão para scrollbar */
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: auto;
+    scroll-marker-group: none;
+
+    &::-webkit-scrollbar {
+        display: block;
+    }
+}
+
+/* Draggin do Carrossel */
+.carousel.overflow{
+    justify-content: start;
+    margin: 0 30px 0 30px;
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+    &:active{
+        cursor: grabbing;
+    }
+}
+.carousel.overflow :global(li){
+    cursor: grab;
+    
+    &:active{
+        cursor: grabbing;
+    }
+}
+
+/* Elementos do carrossel */
+.carousel :global(li.carousel-slide){
+    list-style-type: none;
+    padding: 20px;
+    flex: 0 0 auto;
+}
+
+/* Quando há suporte para scroll-markers */
+@supports (selector(::scroll-marker)) {
+    .carousel {
+        scrollbar-width: none;
+        anchor-name: var(--id);
+
+        &::-webkit-scrollbar { 
+            display: none; 
+        }
+    }
+    
+    /* Botões do Carrossel */
+    .carousel-scroll-buttons.overflow{
+        &::scroll-button(*) {
+            border: 1px solid var(--color-1-dark);
+            border-radius: 50%;
+            
+            background-color: var(--color-dark-bg);
+            color: var(--color-1-darker);
+            font-weight: bold;
+            font-size: var(--text-size);
+            cursor: pointer;
+
+            width: 40px;
+            height: 40px;
+            position: fixed;
+            position-anchor: var(--id);
+            position-visibility: always;
+            font-family: "Material Symbols Outlined";
+        }
+
+        &::scroll-button(*):hover{
+            background-color: var(--color-1-dark);
+            color: var(--color-white);
+        }
+
+        &::scroll-button(right) {
+            position-area: inline-end center;
+            content: 'arrow_forward' / 'Next';
+            margin-left: 10px;
+        }
+
+        &::scroll-button(left) {
+            position-area: inline-start center;
+            content: 'arrow_back' / 'Previous';
+            margin-right: 10px;
+        }
+    }/* carousel-scroll-buttons */
+
+    /* Marcadores do Carrossel */
+    .carousel-scroll-markers.overflow {
+        scroll-marker-group: after;
+
+        &::scroll-marker-group{
+            position: relative;
+            position-anchor: var(--id);
+            position-area: block-end;
+            position-visibility: always;
+            width: var(--width-full);
+            align-content: center;
+            justify-content: center;
+            margin: 10px;
+
+            display: grid;
+            grid-auto-columns: 20px;
+            grid-auto-flow: column;
+            gap: 20px;
+        }
+    }/* carousel-scroll-markers */
+
+    .carousel :global(li.carousel-slide) {
+        &::scroll-marker{
+            content: '' / attr(data-label);
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            border: 2px solid var(--color-1-darker);
+            border-radius: 50%;
+        }
+
+        &::scroll-marker:target-current {
+            background-color: var(--color-1-darker);
+        }
+    }/* .carousel-slide */
+
+    @media screen and (max-width: 600px) {
+        .carousel :global(li.carousel-slide){
+            scroll-snap-align: center;
+        }
+    }
+}/* supports */
+</style>

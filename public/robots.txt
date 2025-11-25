@@ -1,0 +1,6 @@
+# robots.txt
+
+User-agent: *
+Disallow: /_astro
+
+Sitemap: https://ic2d.github.io/sitemap-index.xml

@@ -1,0 +1,141 @@
+---
+import { ResearchAreaIcon } from '@components/ui';
+import '@styles/global.css';
+
+/**
+ * Componente representativo do resumo de um projeto inativo.
+ * Exibe o nome do projeto, membros envolvidos e áreas de pesquisa por padrão, mantendo
+ * a descrição escondida até que o usuário clique sobre o título para revelá-la.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.name] - O nome do projeto.
+ * @param {string[]} [props.members] - Os membros envolvidos no projeto.
+ * @param {string} [props.description] - A descrição do projeto.
+ * @param {string[]} [props.research_areas] - As áreas de pesquisa relacionadas ao projeto.
+ */
+interface Props{
+    name: string;
+    members: string[];
+    description: string;
+    research_areas: string[];
+}
+
+const { name, members, description, research_areas } = Astro.props;
+---
+
+<article class="i-project-resume row block-medium-full">
+    <hgroup class="column">
+        <h4 class="row">{name}</h4>
+        <em class="row">Professores envolvidos: {members.join(', ')}<br>
+        Áreas de pesquisa:</em>
+        <div class="row">
+            {research_areas.map(ra=>(
+                <ResearchAreaIcon name={ra} max_height='25px' no_color/>
+            ))}
+        </div>
+    </hgroup>
+    <p class="column">
+    {description}
+    </p>
+</article>
+
+<!-- =============================================================================================== -->
+
+<script>
+    /**
+     * Adiciona funcionalidade de clique para expandir/recolher a descrição do projeto.
+     * A descrição é inicialmente escondida e é revelada quando o usuário clica no título
+     * do projeto.
+     */
+    const resumes = document.querySelectorAll('.i-project-resume');
+    resumes.forEach(resume => {
+        const hgroup = resume.querySelector('hgroup') as HTMLElement;
+        const p = resume.querySelector('p') as HTMLParagraphElement;
+        hgroup.addEventListener('click', () => {
+            if (p.style.display === 'block') {
+                p.style.display = 'none';
+                hgroup.classList.remove('large-6');
+            } else {
+                p.style.display = 'block';
+                hgroup.classList.add('large-6');
+            }
+        });
+    });
+</script>
+
+<style>
+/* Geral */
+.i-project-resume {
+    position: relative;
+    padding: 0 var(--gutter-lg);
+    margin-bottom: var(--vspace-1_5);
+}
+
+/* Cabeçalho */
+.i-project-resume hgroup{
+    padding-right: 8rem;
+    width: 100%;
+
+    em{
+        margin-top: var(--vspace-0_25);
+        color: var(--color-text);
+    }
+
+    > div > span{
+        margin-bottom: 8px;
+    }
+}
+
+.i-project-resume hgroup:hover{
+    cursor: pointer;
+}
+
+.i-project-resume hgroup:hover > h4{
+    color: var(--color-2);
+}
+
+:global(.s-dark) .i-project-resume h4{
+    color: var(--color-1-dark);
+}
+
+.i-project-resume hgroup em{
+    margin-top: var(--vspace-0_25);
+    color: var(--color-text);
+}
+
+/* Texto */
+.i-project-resume p{
+    display: none;
+    color: var(--color-text);
+    padding: 0;
+    text-align: justify;
+}
+:global(.s-dark) .i-project-resume p{
+    color: var(--color-text-light);
+}
+
+/* Responsividade */
+@media screen and (max-width: 1200px){
+    .i-project-resume{
+
+        hgroup{
+            padding-right: 0;
+        }
+        
+        p{
+            margin-top: var(--vspace-0_5);
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .i-project-resume {
+        padding: 0 var(--gutter-mob);
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .i-project-resume {
+        padding: 0;
+    }
+}
+</style>

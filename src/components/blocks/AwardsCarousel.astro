@@ -1,0 +1,51 @@
+---
+import '@styles/global.css';
+import { Carousel } from "@components/blocks"
+
+import { awards } from "@assets/db"
+
+/**
+ * Componente para exibição das 10 conquistas mais recentes do grupo em um carrossel.
+ * @remarks
+ * Os dados das conquistas (já ordenadas) são importados do banco de dados.
+ */
+---
+
+<Carousel>
+    <!-- Renderização automática das 10 conquistas mais recentes alcançadas pelo grupo -->
+    {awards.slice(0,10).map(award=>{
+        return <li class="carousel-slide">
+            <p class="carousel-slide-title">{award.description}</p>
+            <p><em>{award.members.join(', ')}</em></p>
+        </li>	
+    })}
+</Carousel>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.carousel-slide{
+    max-width: 400px;
+    width: fit-content;
+    border: 2px dotted var(--color-1-dark);
+    border-radius: 15px;
+
+    /* Texto */
+    > p{
+        text-align: center;
+        color: var(--color-text-light);
+        margin: 0;
+    }
+
+    /* Ênfase */
+    > p > em{
+        color: var(--color-text);
+    }
+
+    /* Título */
+    .carousel-slide-title{
+        margin: 0 0 15px 0;
+    }
+}
+</style>

@@ -1,0 +1,52 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+import { PartnershipCarousel } from '@components/blocks';
+
+import LogoUTFPR from '@assets/imgs/logo_utfpr.svg'; 
+/**
+ * Página para exibição de informações sobre o grupo de pesquisa iC²D.
+ */
+---
+
+<BaseLayout subtitle='Sobre'>
+	<Header/>
+
+	<PageHeader title='Sobre'>
+		<div class="about row">
+			<div class="column large-4 medium-4 tab-5 mob-5">
+				<LogoUTFPR style="fill:white;"/>
+			</div>
+			<div class="column tab-12">
+				<p>
+					O Grupo de Estudos e Pesquisa em Inteligência Computacional e Ciência de Dados (iC²D) foi fundado em 
+					2020 por um grupo de professores da UTFPR – campus Apucarana, com o objetivo de fomentar e desenvolver 
+					pesquisas em novas tecnologias, ferramentas e metodologias nas áreas de computação, ciência de dados e 
+					inteligência artificial, bem como divulgá-las para uso profissional ou para o público leigo.
+				</p>
+			</div>
+		</div>
+	</PageHeader>
+
+	<hr/>
+	<PartnershipCarousel/>
+
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->
+
+<style>
+.about {
+	margin-top: 10px;
+
+	> .column{
+		align-content: center;
+	}
+
+	p{
+		margin: 0;
+	}
+}
+</style>

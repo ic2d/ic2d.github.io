@@ -1,0 +1,84 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente para um card de divulgação de um membro do grupo, em um estilo minimalista.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.name] - Nome completo do membro.
+ * @param {string} [props.subtitle] - Conteúdo adicional em formato de subtítulo (opcional).
+ * @param {string} [props.img_src] - URL da imagem do membro.
+ */
+interface Props{
+    name: string;
+    subtitle?: string;
+    img_src: string;
+}
+
+const { name, subtitle = "", img_src} = Astro.props;
+---
+
+<div class="member-card">
+    <img src={img_src} alt=`Fotografia de {name}` class="member-card-avatar">
+    <cite class="member-card-cite">
+        <strong>{name}</strong>
+        <!-- Renderização condicional do subtítulo -->
+        {subtitle ? <span>{subtitle}</span> : null}
+    </cite>
+</div>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.member-card {
+    min-height: var(--vspace-2);
+    margin-bottom: var(--vspace-0_5);
+    padding-left: 8.8rem;
+    position: relative;
+}
+
+/* Figura */
+.member-card-avatar {
+    width: var(--vspace-2);
+    height: var(--vspace-2);
+    border-radius: 100%;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Dados sobre o Membro */
+.member-card-cite {
+    display: block;
+}
+
+.member-card-cite strong, .member-card-cite span {
+    font-style: normal;
+}
+
+.member-card-cite strong {
+    font-size: calc(var(--text-size) * 0.944);
+    line-height: var(--vspace-0_5);
+}
+:global(.s-dark) .member-card-cite strong{
+    color: var(--color-white);
+}
+
+.member-card-cite span {
+    display: block;
+    font-size: calc(var(--text-size) * 0.778);
+    line-height: var(--vspace-0_5);
+    color: rgba(0, 0, 0, 0.6);
+}
+:global(.s-dark) .member-card-cite span{
+    color: var(--color-gray-7);
+}
+
+/* Responsividade */
+@media screen and (max-width: 600px) {
+    .member-card {
+        padding-left: 6.8rem;
+    }
+}
+</style>

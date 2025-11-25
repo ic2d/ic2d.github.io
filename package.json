@@ -1,0 +1,25 @@
+{
+  "name": "ic2d",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.13.7",
+    "dompurify": "^3.2.7",
+    "jquery": "^3.7.1",
+    "slugify": "^1.6.6",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.33",
+    "csv-parse": "^6.1.0",
+    "ts-node": "^10.9.2"
+  }
+}

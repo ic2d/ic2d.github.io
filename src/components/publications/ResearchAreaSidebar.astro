@@ -1,0 +1,90 @@
+---
+import '@styles/global.css';
+import { Sidebar } from "@components/layout";
+import { ResearchAreaIcon } from '@components/ui';
+
+import { research_areas } from '@db';
+import slugify from 'slugify';
+
+/**
+ * Componente para exibir a barra lateral de áreas de pesquisa.
+ * Permite filtrar publicações por área de pesquisa.
+ * @remarks
+ * Destaca a área de pesquisa atualmente selecionada com base na URL.
+ */
+---
+
+<div class="column column-sidebar">
+    <Sidebar title="Áreas de Pesquisa">
+        <ul>
+        <!-- Renderização automática das áreas de pesquisa -->
+        {research_areas.map((ra, i, arr) =>(
+            <li class={`${i === (arr.length-1) ? ' last' : ''}`}>
+                <a href={`/publicacoes/${slugify(ra,{lower:true})}`}>
+                    <ResearchAreaIcon name={ra} max_height='25px' hover/>
+                </a>
+            </li>
+        ))}
+        </ul>
+    </Sidebar>
+</div>
+
+<script>
+    import slugify from 'slugify';
+    const areaLinks = document.querySelectorAll('.column-sidebar a');
+
+    /**
+     * Destaca a área de pesquisa atualmente selecionada na barra lateral.
+     * Compara o slug da área de pesquisa com o caminho atual da URL.
+     * Adiciona a classe 'active' ao link correspondente.
+     */
+    function highlight_current_area() {
+        const currentPath = window.location.pathname;
+
+        areaLinks.forEach(link => {
+            const areaSlug = slugify(link.textContent, { lower: true });
+            if (currentPath.includes(areaSlug)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }// highlightCurrentArea
+
+    /**
+     * Redireciona para a página principal de publicações ao clicar na área de pesquisa 
+     * caso o filtro da mesma esteja atualmente aplicado.
+     */
+    function redirect_on_filter_removal() {
+        areaLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                if (link.classList.contains('active')){
+                    event.preventDefault();
+                    window.location.href = '/publicacoes';
+                }
+            });
+        });
+    }// redirect_on_filter_removal
+
+    /* Executa as funções quando a página é carregada */
+    highlight_current_area();
+    redirect_on_filter_removal();
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Ícones das áreas de pesquisa */
+.column-sidebar ul li {
+    :hover{
+        cursor: pointer;
+    }
+}
+
+/* Responsividdade */
+@media screen and (max-width: 600px) {
+    .column.column-sidebar{
+        padding: 0;
+    }
+}
+</style>

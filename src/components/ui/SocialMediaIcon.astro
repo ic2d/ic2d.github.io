@@ -1,0 +1,70 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente para exibir um ícone de mídia social.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.name] - O nome da mídia social (deve corresponder ao nome do arquivo SVG em `@assets/icons/`).
+ * @param {string} [props.url] - A URL para a qual o ícone deve linkar.
+ * @param {string} [props.max_height="30px"] - A altura máxima do ícone (opcional, padrão: "30px").
+ * @param {string} [props.fill="white"] - A cor de preenchimento do ícone (opcional, padrão: "white").
+ */
+interface Props{
+    name: string;
+    url: string;
+    max_height?: string;
+    fill?: string;
+}
+
+const { name, url, max_height = "30px", fill="white" } = Astro.props;
+
+/**
+ * Tenta importar o ícone SVG correspondente ao nome fornecido.
+ * Se o arquivo não for encontrado, `IconComponent` será `null`.
+ */
+let IconComponent: ((_props: astroHTML.JSX.SVGAttributes) => any) & ImageMetadata | null = null;
+
+try {
+    IconComponent = (await import(`@assets/icons/${name}.svg`)).default;
+} catch (error) {
+    IconComponent = null;
+}
+
+---
+
+<a class="sm-link" href={url} target="_blank" title={name} aria-label={name} style=`--sm-max-height: ${max_height}; fill: ${fill};`>
+    <!-- Renderização condicional do ícone desejado / ícone de imagem não encontrada -->
+    {IconComponent != null ? 
+        <IconComponent class="sm-icon"><title>{name}</title></IconComponent>
+        : 
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="sm-icon icon-error" viewBox="0 0 16 16">
+            <title>{name}</title>
+            <path d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z"/>
+        </svg>
+    }
+</a>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.sm-link{
+    display: inline-flex;          
+    align-items: center;           
+    justify-content: center;       
+    height: var(--sm-max-height);  
+    text-decoration: none;
+}
+
+/* Ícone */
+.sm-icon{
+    height: 100%;
+    width: auto;                  
+    transition: fill 0.3s ease-in-out;
+    display: block;
+}
+
+.sm-icon:hover, .sm-icon:focus{
+    fill: var(--color-1);
+}
+</style>

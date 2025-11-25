@@ -1,0 +1,85 @@
+---
+import '@styles/global.css';
+
+/**
+ * Componente para exibir um item de estatística com um ícone, quantidade e nome.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.name] - O nome da estatística (ex: "Projetos").
+ * @param {number} [props.qtde] - A quantidade associada à estatística (ex: 150).
+ * @param {string} [props.img_src] - O nome do arquivo SVG do ícone (deve corresponder ao nome do arquivo em `@assets/icons/`).
+ * 
+ * @remarks
+ * Usado em conjunto com o componente `Statistics`.
+ */
+interface Props{
+    name: string;
+    qtde: number;
+    img_src: string;
+}
+
+const { name, qtde, img_src } = Astro.props;
+
+/**
+ * Tenta importar o ícone SVG correspondente ao nome fornecido.
+ * Se o arquivo não for encontrado, `IconComponent` será `null`.
+ */
+
+let IconComponent: ((_props: astroHTML.JSX.SVGAttributes) => any) & ImageMetadata | null = null;
+
+try {
+    IconComponent = (await import(`@assets/icons/${img_src}.svg`)).default;
+} catch (error) {
+    IconComponent = null;
+}
+---
+
+<div class="s-statistics-item column">
+    <div class="row img">
+        <!-- Renderização condicional do ícone desejado / ícone de imagem não encontrada -->
+        {IconComponent != null ? 
+            <IconComponent class="statistics-icon" aria-label={`Íconde de ${name}`}></IconComponent>
+            : 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="sm-icon icon-error" viewBox="0 0 16 16">
+                <title>{name}</title>
+                <path d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z"/>
+            </svg>
+        }
+    </div>
+    <p>{qtde} {name}</p>
+</div>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.s-statistics-item{
+    justify-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* Ícone */
+.row.img{
+    height: 200px;
+    aspect-ratio: 1/1;
+    background-color: var(--color-white);
+    border: 25px solid var(--color-white);
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.statistics-icon{
+    max-height: 100px;
+    margin-bottom: var(--vspace-0_25);   
+    align-self: center; 
+}
+
+/* Texto */
+.s-statistics-item p {
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 0;
+    color: var(--color-black);
+    text-shadow: 0 0 0px var(--color-black);
+}
+</style>

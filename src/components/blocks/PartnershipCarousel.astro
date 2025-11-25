@@ -1,0 +1,31 @@
+---
+import '@styles/global.css';
+import { Section } from '@components/blocks';
+import { Carousel } from '@components/blocks';
+import { PartnershipIcon } from '@components/ui';
+
+import { partners } from '@db';
+
+/**
+ * Componente para exibição das parcerias do grupo em um carrossel.
+ * @remarks
+ * Os dados dos parceiros são importados do banco de dados.
+ */
+---
+
+<Section title='Parcerias' class="s-dark"
+    lead='A pesquisa acontece de forma coletiva. Aqui estão alguns dos parceiros com quem já trabalhamos em projetos\
+     e iniciativas conjuntas.' >
+
+    <Carousel>
+    <!-- Renderização automática dos ícones de parceiros -->
+    { partners.map(partner=>(
+        <li class="carousel-slide">
+            <PartnershipIcon partner={partner}/>
+        </li>
+    ))}
+    </Carousel>
+    
+</Section>
+
+<!-- =============================================================================================== -->

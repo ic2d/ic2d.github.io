@@ -1,0 +1,96 @@
+---
+import "@styles/global.css";
+
+import { ra_color_map } from "@assets/db";
+
+/**
+ * Componente para exibir o ícone de uma área de pesquisa.
+ * @remarks
+ * Utiliza o mapa de cores das áreas de pesquisa do banco de dados para colorir o texto/ícone com
+ * base no nome da área de pesquisa.
+ * 
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.name] - O nome da área de pesquisa.
+ * @param {string} [props.max_height="30px"] - A altura máxima do ícone (opcional, padrão: "30px").
+ * @param {boolean} [props.label_hide] - Se verdadeiro, oculta o label do ícone até que o usuário passe o mouse sobre ele (opcional, padrão: false).
+ * @param {boolean} [props.hover] - Se verdadeiro, remove a coloração do label, permitindo coloração sobre o hover (opcional, padrão: false).
+  * @param {boolean} [props.no_color] - Se verdadeiro, define a coloração do ícone e label como a coloração padrão de texto  (opcional, padrão: false).
+ */
+interface Props{
+    name: string;
+    max_height?: string;
+    label_hide?: boolean;
+    hover?: boolean;
+    no_color?: boolean;
+}
+
+const { name, max_height = "32px", label_hide = false, hover = false, no_color=false} = Astro.props;
+
+/**
+ * Tenta importar o ícone SVG das áreas de pesquisa.
+ * Se o arquivo não for encontrado, `IconComponent` será `null`.
+ */
+let Icon: ((_props: astroHTML.JSX.SVGAttributes) => any) & ImageMetadata | null = null;
+
+try {
+    Icon = (await import(`@assets/icons/AreaPesquisa.svg`)).default;
+} catch (error) {
+    Icon = null;
+}
+
+const fill = no_color? "var(--color-text)" : ra_color_map[name];
+---
+
+<span class="research-area" title={name} style=`--sm-max-height: ${max_height}; fill: ${fill};`>
+    <!-- Renderização condicional do ícone desejado / ícone de imagem não encontrada -->
+    {Icon != null ? 
+        <Icon class="ra-icon"><title>{name}</title></Icon>
+        : 
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ra-icon icon-error" viewBox="0 0 16 16">
+            <title>{name}</title>
+            <path d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z"/>
+        </svg>
+    }
+    <span class={`${label_hide? 'hide' : ''}`} style={`${hover? '' : `color: ${fill};`}`}>{name}</span>
+</span>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.research-area{
+    display: inline-flex;
+    flex-wrap: wrap;          
+    align-items: center;           
+    justify-content: center;       
+    height: var(--sm-max-height);  
+    text-decoration: none;
+    
+    span{
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+
+    span.hide{
+        display: none;
+        width: 0;
+        margin-left: 0;
+    }
+}
+
+/* Ícone */
+.ra-icon{
+    height: var(--sm-max-height);
+    width: auto;                  
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.research-area:hover, .research-area:focus{
+    span.hide{
+        display: inline-block;
+        width: fit-content;
+        margin-left: 7px;
+    }
+}
+</style>

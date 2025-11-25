@@ -1,0 +1,45 @@
+---
+import '@styles/global.css';
+import { PublicationsLayout } from '@layouts';
+
+import type { GetStaticPaths } from "astro";
+import { publications, research_areas } from '@db';
+import slugify from "slugify";
+
+/**
+ * Página de exibição das publicações do grupo, com filtro por área de pesquisa aplicado.
+ * @param {Object} props - Propriedades passadas para a página.
+ * @param {string} [props.research_area] - Área de pesquisa para filtrar as publicações.
+ */
+interface Props{
+	research_area: string;
+}
+
+const { research_area } = Astro.props;
+
+/**
+ * Filtra as publicações para obter as publicações relacionados à área de pesquisa especificada.
+ */
+const filtered_publications = publications.filter(pub=>(pub.research_areas.includes(research_area)));
+
+/**
+ * Gera as rotas estáticas para cada área de pesquisa, tratada com slugify.
+ * Cada rota exibe publicações filtradas por uma área de pesquisa específica.
+ * Cada rota gerará uma página estática durante a construção do site.
+ */
+export const getStaticPaths = (() => {
+    return research_areas.map(ra=>({
+		params: {
+			slug: slugify(ra,{lower:true})
+		},
+		props: {
+			research_area: ra
+		}
+	}));
+}) satisfies GetStaticPaths;
+---
+
+<PublicationsLayout
+	publications={filtered_publications}/>
+
+<!-- =============================================================================================== -->

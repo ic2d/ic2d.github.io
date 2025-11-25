@@ -1,0 +1,157 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente representando o botão de _scroll-up_, que aparece após 800px
+ * abaixo do topo da página, para facilitar ao usuário retornar ao topo da página.
+ */
+---
+
+<div class="ss-go-top">
+    <button type="button" class="smoothscroll" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z" />
+        </svg>
+    </button>
+</div>
+
+<!-- =============================================================================================== -->
+
+<script>
+    import $ from "jquery";
+
+    
+    /**
+     * Função para configurar o scroll suave ao topo da página ao clicar no botão.
+     */
+    function smooth_scroll_up() {
+        $('.smoothscroll').on('click', function () {            
+            window.scrollTo({
+                top:0,
+                behavior: "smooth"
+            })
+        });
+    };
+
+
+    /**
+     * Função para configurar a exibição do botão de voltar ao topo, dependendo da
+     * posição do scroll na página.
+     */
+    function show_go_top() {
+
+        const pxShow = 800;
+        const goTopButton = document.querySelector(".ss-go-top");
+
+        if (!goTopButton) return;
+
+        // Show or hide the button
+        if (window.scrollY >= pxShow) goTopButton.classList.add("link-is-visible");
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY >= pxShow) {
+                if(!goTopButton.classList.contains('link-is-visible')) goTopButton.classList.add("link-is-visible")
+            } else {
+                goTopButton.classList.remove("link-is-visible")
+            }
+        });
+    };
+
+    /* Aplica as configurações de comportamento do componente */
+    smooth_scroll_up();
+    show_go_top();
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.ss-go-top {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translate3d(0, 200%, 0);
+    transform: translate3d(0, 200%, 0);
+    -webkit-transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    position: fixed;
+    bottom: 8rem;
+    right: 6.4rem;
+}
+
+.ss-go-top button {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-decoration: none;
+    border: 0 none;
+    height: 6.4rem;
+    width: 6.4rem;
+    border-radius: 50%;
+    background-color: black;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    position: relative;
+}
+
+.ss-go-top button:hover, .ss-go-top button:focus {
+    background-color: var(--color-1);
+}
+
+/* Ícone */
+.ss-go-top svg {
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.ss-go-top svg path {
+    fill: white;
+}
+
+/* Visibilidade */
+.ss-go-top.link-is-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+/* Responsividade */
+@media screen and (max-width: 1200px) {
+    .ss-go-top {
+        right: 4rem;
+    }
+    .ss-go-top button {
+        height: 6rem;
+        width: 6rem;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .ss-go-top {
+        right: 3.6rem;
+        bottom: 4.8rem;
+    }
+    .ss-go-top a {
+        height: 5.2rem;
+        width: 5.2rem;
+    }
+    .ss-go-top svg {
+        height: 2rem;
+        width: 2rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .ss-go-top {
+        right: 2.4rem;
+        bottom: 4rem;
+    }
+}
+</style>

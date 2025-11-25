@@ -1,0 +1,71 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente representando um bloco de texto, contendo título, subtítulo e corpo do texto. Contudo,
+ * sua representação é feita em duas colunas, sendo o título e subtítulo em uma coluna e o corpo do texto
+ * em outra.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.title] - O título do artigo.
+ * @param {string} [props.subtitle] - O subtítulo do artigo (opcional).
+ * @param {boolean} [props.justified=false] - Define se o texto do corpo do artigo será justificado (opcional).
+ * 
+ * @remarks
+ * Possui fallback para apenas uma coluna em telas menores.
+ */
+interface Props{
+    title: string;
+    subtitle?: string;
+    justified?: boolean;
+}
+
+const { title, subtitle = "", justified = false } = Astro.props;
+---
+
+<article class="row tc-article">
+    <hgroup class="column tab-12 mob-10">
+        <h3>{title}</h3>
+        <!-- Renderização condicional do subtítulo -->
+        {subtitle ? <p class="desc">{subtitle}</p> : null}
+    </hgroup>
+
+    <div class="column tc-content" style={justified ? "text-align: justify;" : ""}>
+        <slot/>
+    </div>
+</article>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.tc-article {
+    margin-bottom: var(--vspace-1);
+    width: var(--width-full);
+}
+
+/* Cabeçalho */
+.tc-article hgroup{
+    margin-bottom: var(--vspace-0_5);
+}
+
+.tc-article hgroup h3 {
+    font-size: var(--text-xl);
+    line-height: var(--vspace-1_25);
+    margin-top: 0;
+    margin-bottom: calc(0.125 * var(--space));
+}
+
+:global(.s-dark) .tc-article hgroup h3 {
+    color: var(--color-1-darker);
+}
+
+.tc-article hgroup p {
+    font-size: var(--text-size);
+    color: var(--color-text);
+}
+
+/* Conteúdo */
+.tc-content :global(*){
+    color: var(--color-text-light);
+}
+</style>

@@ -1,0 +1,145 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+import { Section } from "@components/blocks";
+import { Member, MemberBlock } from '@components/members';
+import { SocialMediaIcon } from '@components/ui';
+
+import { professors, students, colaborators } from '@db';
+
+/**
+ * Página apresentando todos os membros atuais e ex-membros do grupo de pesquisa, incluindo professores, alunos e colaboradores.
+ * 
+ * @remarks
+ * Os dados dos membros e ex-membros são obtidos da base de dados.
+ */
+
+/**
+ * Filtra os membros ativos e inativos (ex-membros) para exibição nas respectivas seções.
+ */
+const current_professors = professors.filter(professors => (professors.membership.status == "Ativo"));
+const current_students = students.filter(student => (student.membership.status == "Ativo" && student.membership.role == ""));
+const current_colaborators = colaborators.filter(colaborator => (colaborator.membership_status == "Ativo"));
+const current_student_colaborators = students.filter(student => (student.membership.status == "Ativo" && student.membership.role == "Colaborador"));
+
+const former_professors = professors.filter(professors => (professors.membership.status == "Inativo"));
+const former_students = students.filter(student => (student.membership.status == "Inativo"));
+const former_colaborators = colaborators.filter(colaborator => (colaborator.membership_status == "Inativo"));
+---
+
+<BaseLayout subtitle='Membros'>
+	<Header/>
+    <PageHeader title="Nossa Equipe">
+        <p>
+            Conheça as pessoas que fazem parte da nossa equipe de pesquisa e desenvolvimento de projetos: 
+            professores responsáveis pela orientação científica e inovação, alunos que participam ativamente nas iniciativas do grupo 
+            e colaboradores externos que, mesmo sem vínculo formal, contribuem significativamente para o avanço das pesquisas.
+        </p>
+        <p>
+            Também reconhecemos com gratidão todos aqueles que, em algum momento, fizeram parte da nossa equipe — ex-membros e ex-colaboradores 
+            que deixaram sua marca e contribuíram para a construção da nossa trajetória.
+        </p>
+    </PageHeader>
+
+    
+    <hr/>
+    <Section title="Professores" class="s-dark">
+        <MemberBlock class="s-members">
+        <!-- Renderização automática dos professores que fazem parte do grupo -->
+        {current_professors.map(professor => (
+            <Member name_prefix={`Prof. ${professor.academic_title}`} 
+                name={professor.name} 
+                subtitle={professor.membership.role} 
+                social_media={professor.social_media.filter(sm => (sm.url))}
+                img_src={professor.img_src}/>
+        ))}
+        </MemberBlock>
+    </Section>
+
+    <hr/>
+    <Section title="Alunos" class="s-dark">
+        <MemberBlock class="s-members">
+        <!-- Renderização automática dos alunos que fazem parte do grupo -->
+        {current_students.map(student => (
+            <Member name={student.name} 
+                subtitle={`Aluno de ${student.academic_level}`} 
+                social_media={student.social_media.filter(sm => (sm.url))} 
+                img_src={student.img_src}/>
+        ))}
+        </MemberBlock>
+    </Section>
+    
+    <hr/>
+    <Section title="Colaboradores" class="s-dark">
+        <MemberBlock class="s-members">
+        <!-- Renderização automática dos professores que fazem parte do grupo -->
+        {current_colaborators.map(colaborator => (
+            <Member
+                name={colaborator.name} 
+                subtitle={colaborator.organization} 
+                social_media={colaborator.social_media.filter(sm => (sm.url))}
+                img_src={colaborator.img_src}/>
+        ))}
+        {current_student_colaborators.map(student => (
+            <Member name={student.name} 
+                subtitle={`Alumni Colaborador`} 
+                social_media={student.social_media.filter(sm => (sm.url))} 
+                img_src={student.img_src}/>
+        ))}
+        </MemberBlock>
+    </Section>
+
+    <hr/>
+    <Section title="Ex-Membros e Colaboradores" class="s-dark">
+        <ul class="ex-members">
+            <!-- Renderização automática dos professores que fizeram parte do grupo -->
+            {former_professors.map(member => (
+                <li><span>
+                    {member.name} (ex-prof)
+                    {member.social_media.filter(sm => (sm.url)).map(sm=>(<SocialMediaIcon name={sm.name} url={sm.url}/>))}
+                </span></li>
+            ))}
+            <!-- Renderização automática dos alunos que fizeram parte do grupo -->
+            {former_students.map(member => (
+                <li><span>
+                    {member.name} (ex-aluno)
+                    {member.social_media.filter(sm => (sm.url)).map(sm=>(<SocialMediaIcon name={sm.name} url={sm.url}/>))}
+                </span></li>
+            ))}
+            <!-- Renderização automática dos colaboradores que colaboraram com o grupo -->
+            {former_colaborators.map(member => (
+                <li><span>
+                    {member.name} (ex-colab)
+                    {member.social_media.filter(sm => (sm.url)).map(sm=>( <SocialMediaIcon name={sm.name} url={sm.url}/>))}
+                </span></li> 
+            ))}
+        </ul>
+    </Section>
+
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Bordas Extras - Member-Block*/
+.s-members{
+    border-top: 2px;
+    border-bottom: 20px;
+    border-color: var(--color-1);
+}
+
+/* Lista de Ex-Membros */
+.ex-members li{
+    list-style-position: outside;
+    list-style: disc;
+    margin-bottom: 1.3rem;
+}
+
+.ex-members li span{
+    display: flex;
+    align-items: center; 
+    gap: 1rem;
+}
+</style>

@@ -1,0 +1,24 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente para uma seção de exibição dos cards de mebros, configurando o estilo de exibição e responsividade.
+ * @remarks
+ * Os membros são passados como filhos desse componente, sendo esperado componentes `MemberCard`.
+ * Os cards são exibidos em uma grade com espaçamento entre eles, alinhados à esquerda.
+ */
+---
+
+<div class="row block-large-1-4 block-medium-1-3 block-tab-1-2 block-500-stack team-block">
+    <slot/>
+</div>
+
+<!-- =============================================================================================== -->
+
+<style>
+.team-block {
+    margin-top: var(--vspace-1);
+    margin-bottom: var(--vspace-1);
+    gap: 20px;
+}
+</style>

@@ -1,0 +1,412 @@
+---
+import "@styles/global.css";
+import Logo from "@assets/imgs/logo.svg";
+
+/**
+ * Componente representativo da barra de navegação da página.
+ * Inclui o logotipo e a barra de navegação principal.
+ */
+---
+
+<header class="s-header">
+    <div class="row">
+
+        <div class="s-header-logo">
+            <a href="/" aria-label="Página inicial.">
+                <Logo aria-label="Logo do grupo de pesquisa">
+            </a>
+        </div>
+
+        <nav class="s-header-nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/sobre">Sobre</a></li>
+                <li><a href="/membros">Membros</a></li>
+                <li><a href="/projetos">Projetos</a></li>
+                <li><a href="/publicacoes">Publicações</a></li>
+                <li><a href="/premiacoes">Premiações</a></li>
+                <li><a href="/contato">Contato</a></li>
+            </ul>
+        </nav>
+
+        <button type="button" class="s-header-menu-toggle" title="Menu">
+            <span class="s-header-menu-icon"></span>
+        </button>
+
+    </div> 
+</header> 
+
+<!-- =============================================================================================== -->
+
+<script>
+    import $ from "jquery";
+
+    /**
+     * Função para fixar o cabeçalho no topo da página ao rolar para baixo.
+     * Caso o usuário role para cima, próximo ao topo da página, 
+     * o cabeçalho volta à posição original.
+     */
+    function show_header_on_scrolling (){
+
+        const hdr = document.querySelector('.s-header');
+        let triggerHeight: number;
+
+        if (!hdr) return;
+
+        setTimeout(function(){
+            triggerHeight = hdr.clientHeight + 300;
+        }, 300);
+
+        window.addEventListener('scroll', function () {
+
+            let loc = window.scrollY;
+
+            if (loc > triggerHeight) {
+                hdr.classList.add('sticky');
+            } else {
+                hdr.classList.remove('sticky');
+            }
+
+            if (loc > triggerHeight + 20) {
+                hdr.classList.add('offset');
+            } else {
+                hdr.classList.remove('offset');
+            }
+
+            if (loc > triggerHeight + 150) {
+                hdr.classList.add('scrolling');
+            } else {
+                hdr.classList.remove('scrolling');
+            }
+
+        });
+    };
+
+    /**
+     * Função para configurar o menu móvel.
+     * Adiciona funcionalidade de alternância ao botão do menu móvel.
+     * Também ajusta a visibilidade do menu com base no tamanho da tela.
+     */
+    function configure_mobile_menu() {
+
+        const $toggleButton = $('.s-header-menu-toggle');
+        const $nav = $('.s-header-nav');
+
+
+        $toggleButton.on('click', function(event){
+            event.preventDefault();
+            $toggleButton.toggleClass('is-clicked');
+            $nav.slideToggle();
+        });
+
+        // add mobile class
+        if ($toggleButton.is(':visible')) $nav.addClass('mobile');
+
+        $(window).on("resize",function() {
+            if ($toggleButton.is(':visible')) $nav.addClass('mobile');
+            else $nav.removeClass('mobile');
+        });
+
+        $('.s-header-nav ul').on("click", function() {
+            if ($nav.hasClass('mobile')) {
+                $toggleButton.trigger('click');
+            }
+        });
+    }; 
+
+    /**
+     * Função para destacar o link de navegação atual com base na URL.
+     * Adiciona a classe 'current' ao item de navegação correspondente.
+     */
+    function highligh_navbar() {
+        const $navigationLinks = $(".s-header-nav li a");
+        const curr_pathname = window.location.pathname;
+
+        $navigationLinks.each(function(_: number, element: HTMLElement) {
+            const navLink = element as HTMLAnchorElement;
+            if (navLink.pathname === "/"&& curr_pathname === "/") {
+                $(navLink).parent().addClass("current");
+            }
+            if (navLink.pathname !== "/" && curr_pathname.includes(navLink.pathname)) {
+                $(navLink).parent().addClass("current");
+            }
+        });
+        
+    };
+
+    highligh_navbar();
+    show_header_on_scrolling();
+    configure_mobile_menu();
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.s-header {
+    z-index: 100;
+    width: 100%;
+    background-color: var(--color-header);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.s-header .row {
+    min-height: var(--header-height);
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 0 calc(var(--gutter-lg) + 1.2rem);
+    position: relative;
+}
+
+.s-header.offset {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.s-header.scrolling {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.s-header.sticky {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.s-header.sticky.scrolling {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Logo */
+.s-header-logo {
+    --logo-width: 85px;
+    --logo-height: 20px;
+    height: var(--header-height);
+    width: var(--logo-width);
+    margin-right: 4rem;
+    position: relative;
+    fill: var(--color-1);
+}
+
+.s-header-logo a {
+    display: block;
+    height: var(--logo-height);
+    padding: 0;
+    outline: 0;
+    border: none;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+
+.s-header-logo img {
+    vertical-align: top;
+    width: var(--logo-width);
+    height: var(--logo-height);
+    margin: 0;
+}
+
+/* Navegação */
+.s-header-nav {
+    font-family: var(--font-2);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+.s-header-nav ul {
+    display: block;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.s-header-nav li {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.s-header-nav a {
+    display: block;
+    height: var(--header-height);
+    line-height: var(--header-height);
+    padding: 0 16px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.s-header-nav a:hover, .s-header-nav a:focus {
+    color: var(--color-1);
+}
+
+.s-header-nav .current a {
+    background-color: var(--color-1);
+    color: white;
+}
+
+/* Menu Mobile */
+.s-header-menu-toggle {
+    display: none;
+    border-width: 0;
+    font-family: var(--font-1);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: .4rem;
+    background-color: var(--color-1);
+    color: white;
+    width: var(--header-height);
+    height: var(--header-height);
+    line-height: var(--header-height);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.s-header-menu-toggle .s-header-menu-icon {
+    display: block;
+    width: 30px;
+    height: 2px;
+    margin-top: -1px;
+    right: auto;
+    bottom: auto;
+    background-color: white;
+    position: absolute;
+    left: 21px;
+    top: 50%;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.s-header-menu-toggle .s-header-menu-icon::before, 
+.s-header-menu-toggle .s-header-menu-icon::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    position: absolute;
+    left: 0;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.s-header-menu-toggle .s-header-menu-icon::before {
+    top: -10px;
+}
+
+.s-header-menu-toggle .s-header-menu-icon::after {
+    bottom: -10px;
+}
+
+.s-header-menu-toggle.is-clicked .s-header-menu-icon {
+    background-color: rgba(255, 255, 255, 0);
+    -webkit-transition: all .1s;
+    transition: all .1s;
+}
+
+.s-header-menu-toggle.is-clicked .s-header-menu-icon::before, 
+.s-header-menu-toggle.is-clicked .s-header-menu-icon::after {
+    background-color: white;
+}
+
+.s-header-menu-toggle.is-clicked .s-header-menu-icon::before {
+    top: 0;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.s-header-menu-toggle.is-clicked .s-header-menu-icon::after {
+    bottom: 0;
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+
+.s-header-menu-toggle:hover{
+    background-color: var(--color-1-dark);
+}
+
+/* Responsividade */
+@media screen and (max-width: 924px) {
+    .s-header .row {
+        display: block;
+        width: 100%;
+        padding: 0;
+    }
+    .s-header-logo {
+        margin: 0 auto;
+    }
+    .s-header-nav {
+        display: none;
+        height: auto;
+        width: 100%;
+        background-color: black;
+        padding: var(--vspace-2_5) 6rem 3.6rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .s-header-nav ul {
+        display: block;
+        margin: 0 0 4.4rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .s-header-nav ul li {
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .s-header-nav ul li a {
+        height: auto;
+        padding: var(--vspace-0_5) 0.4rem;
+        line-height: var(--vspace-0_75);
+    }
+    .s-header-nav .current a {
+        background-color: transparent;
+        color: var(--color-1);
+    }
+    .s-header-menu-toggle {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .s-header-logo {
+        margin: 0 0 0 4rem;
+    }
+    .s-header-nav {
+        padding: var(--vspace-2_5) 4rem 3.6rem;
+    }
+    .s-header-nav ul li a {
+        padding: 1.8rem .4rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .s-header-logo {
+        margin: 0 0 0 7vw;
+    }
+    .s-header-nav {
+        padding: var(--vspace-2_5) 3.6rem 3.6rem;
+    }
+}
+
+/* Garante que o menu seja visível em telas grandes */
+@media only screen and (min-width: 925px) {
+    .s-header-nav {
+        display: block !important;
+    }
+}
+
+</style>

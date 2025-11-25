@@ -1,0 +1,74 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+import { PublicationSection, ResearchAreaSidebar } from '@components/publications';
+
+import type { Publication } from '@scripts/interfaces';
+
+/**
+ * Layout para a página de publicações e as subpáginas de filtros.
+ * Exibe uma lista de publicações e uma barra lateral com áreas de pesquisa.
+ * @param {Object} props - Propriedades passadas para o layout.
+ * @param {Publication[]} props.articles - Lista de artigos para exibir.
+ * @param {Publication[]} props.inproceedings - Lista de anais de eventos para exibir.
+ * 
+ * @remarks
+ * O filtro das publicações é configurado no componente `ResearchAreaSidebar`.
+ * As seções dos diferentes tipos de publicações somente serão renderizadas se houver no mínimo uma publicação
+ * daquele tipo.
+ */
+interface Props{
+    publications: Publication[];
+}
+
+const { publications } = Astro.props;
+
+/**
+ * Filtra as publicações, separando-as em artigos e anais.
+ */
+const articles = publications.filter(pub=>(pub.type=="Artigo"));
+const inproceedings = publications.filter(pub=>(pub.type=="Anais"));
+---
+
+<BaseLayout subtitle="Publicações">
+	<Header/>
+	
+	<PageHeader title='Publicações'>
+		<p>Publicações e produções do grupo de pesquisa.</p>
+	</PageHeader>
+
+	<hr/>
+
+	<div class="row">
+		<div class="column large-8 medium-8 tab-12">
+			<!-- Renderização condicional da seção de Artigos -->
+			{articles.length > 0 ?
+                <PublicationSection 
+				title='Artigos' 
+				class="s-dark" 
+				publications={articles}/>
+                :
+                null
+            }
+			
+			<!-- Renderização condicional da divisória entre seções -->
+            {articles.length > 0 && inproceedings.length > 0 ? <hr/> : null}
+			
+			<!-- Renderização condicional da seção de Anais de Eventos -->
+			{inproceedings.length > 0 ?
+                <PublicationSection 
+                    title='Anais de Eventos' 
+                    class="s-dark" 
+                    publications={inproceedings}/>
+                :
+                null
+            }
+		</div>
+
+		<ResearchAreaSidebar/>
+	</div>
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->

@@ -1,0 +1,61 @@
+---
+import "@styles/global.css";
+
+import type { Partner } from '@scripts/interfaces';
+
+/**
+ * Componente para exibir o ícone de um parceiro no formato esperado do componente `Carousel`.
+ * @param {Object} props - As propriedades do componente.
+ * @param {Partner} [props.partner] - O objeto parceiro contendo informações como nome, URL e abreviação.
+ * @param {string} [props.max_height="120px"] - A altura máxima do ícone (opcional, padrão: "120px").
+ * @param {string} [props.fill="var(--color-gray-15)"] - A cor de preenchimento do ícone (opcional, padrão: "var(--color-gray-15)").
+ * 
+ * @remarks
+ * Usado em conjunto com o componente `PartnershipCarousel`.
+ */
+interface Props{
+    partner: Partner;
+    max_height?: string;
+    fill?: string;
+}
+
+const { partner, max_height = "120px", fill="var(--color-gray-15)" } = Astro.props;
+
+let IconComponent: ((_props: astroHTML.JSX.SVGAttributes) => any) & ImageMetadata | null = null;
+
+try {
+    // Importação dinâmica do SVG como componente
+    IconComponent = (await import(`@assets/icons/${partner.abbreviation.replaceAll(' ','_')}.svg`)).default;
+} catch (error) {
+    // Se o arquivo não for encontrado, atribui `null`
+    IconComponent = null;
+}
+
+---
+
+<a href={partner.url} target="_blank" title={partner.abbreviation} aria-label={partner.abbreviation} style=`--p-max-height: ${max_height}; fill: ${fill};`>
+<!-- Renderização condicional do ícone desejado / ícone de imagem não encontrada -->
+{IconComponent != null ? 
+    <IconComponent class="c-icon"><title>{partner.name}</title></IconComponent>
+    : 
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="c-icon" viewBox="0 0 16 16">
+        <title>{partner.name}</title>
+        <path d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z"/>
+    </svg>
+}
+</a>
+
+<!-- =============================================================================================== -->
+
+<style>
+.c-icon{
+    max-height: var(--p-max-height);
+    width: fit-content;
+    border: none;
+    fill: var(--color-gray-8);
+}
+
+.c-icon:hover{
+    fill: var(--color-2);
+}
+</style>

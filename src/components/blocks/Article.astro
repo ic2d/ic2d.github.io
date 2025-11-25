@@ -1,0 +1,66 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente representativo de um bloco de texto, com título, subtítulo e corpo do texto.
+ * O título e o subtítulo são opcionais, podendo ser usado como bloco de texto simples.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.title] - O título do bloco de texto (opcional).
+ * @param {string} [props.subtitle] - O subtítulo do bloco de texto (opcional).
+ * @param {boolean} [props.justified] - Se o texto deve ser justificado ou não (opcional, padrão: `False`).
+ */
+interface Props{
+    title?: string;
+    subtitle?: string;
+    justified?: boolean;
+}
+
+const { title, subtitle = "", justified = false } = Astro.props;
+---
+
+<article class="row column article" style={justified? "text-align: justify;" : ""}>
+    <!-- Renderização condicional de título e subtítulo -->
+    {title?
+        <hgroup>
+            <h3>{title}</h3>
+            {subtitle ? <p class="desc">{subtitle}</p> : null}
+        </hgroup>
+        :
+        null
+    }
+
+    <slot/>
+</article>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.article {
+    margin-bottom: var(--vspace-1);
+    width: var(--width-full);
+    color: var(--color-text-light);
+}
+
+/* Cabeçalho */
+.article hgroup{
+    margin-bottom: var(--vspace-0_5);
+}
+
+.article hgroup h3 {
+    font-size: var(--text-xl);
+    line-height: var(--vspace-1_25);
+    margin-top: 0;
+    margin-bottom: calc(0.125 * var(--space));
+}
+
+:global(.s-dark) .article h3 {
+    color: var(--color-1-darker);
+}
+
+.article hgroup p {
+    font-size: var(--text-size);
+    color: var(--color-text);
+}
+
+</style>

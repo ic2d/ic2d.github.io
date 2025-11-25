@@ -1,0 +1,51 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+import { InactiveProjectSection, ProjectSection } from '@components/projects';
+
+import { projects } from '@db';
+
+/**
+ * Página de exibição dos projetos desenvolvidos pelo grupo de pesquisa.
+ * Incluindo projetos ativos e inativos.
+ * @remarks
+ * Os dados dos projetos são obtidos da base de dados.
+ */
+
+/**
+ * Filtra os projetos, separando-os em ativos e inativos.
+ */
+const active_projects = projects.filter(project => (project.status == "Ativo"));
+const inactive_projects = projects.filter(project => (project.status == "Inativo"));
+---
+
+<BaseLayout subtitle='Projetos'>
+	<Header/>
+
+	<PageHeader title="Projetos">
+		<p>
+			Conheça os projetos desenvolvidos pelo nosso grupo de pesquisa. Aqui você encontra informações sobre iniciativas 
+			em andamento e projetos já concluídos, destacando as áreas de atuação, objetivos e membros envolvidos.
+		</p>
+		<p>
+		 Nosso compromisso é promover inovação, colaboração e avanço científico por meio de pesquisas multidisciplinares.
+		</p>
+	</PageHeader>
+	
+	<hr>
+
+	<ProjectSection title="Projetos Vigentes" class="s-dark" projects={active_projects}/>
+	
+	<!-- Renderização condicional da seção de projetos inativos -->
+	{inactive_projects.length > 0 ? 
+		<hr/>
+		<InactiveProjectSection title="Projetos Finalizados" class="s-dark" projects={inactive_projects}/>
+		: 
+		null
+	}
+	
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->

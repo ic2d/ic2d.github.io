@@ -1,0 +1,139 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente reutilizável de botão.
+ * @param {Object} props - Propriedades passadas para o componente.
+ * @param {...Object} args - Atributos HTML adicionais para o botão.
+ * 
+ * @remarks
+ * Contém as classes para estilização dos botões.
+ */
+const { ...args } = Astro.props;
+---
+
+<button {...args}>
+    <slot />
+</button>
+
+<style>
+
+/* ==========================================================================
+    Modificadores de Estilo:
+        .btn-primary         - Botão com cor principal (chamado à ação)
+        .btn-stroke          - Botão com contorno, sem preenchimento
+        .btn-stroke-primary  - Contorno com cor principal
+
+    Modificadores de Layout:
+        .h-full-width        - Faz o botão ocupar 100% da largura do contêiner
+
+    Modificadores de Tamanho:
+        .btn-small           - Botão compacto
+        .btn-medium          - Tamanho padrão (default)
+        .btn-large           - Botão grande
+
+    Modificador de Forma:
+        .btn-pill            - Bordas totalmente arredondadas
+   ========================================================================== */
+
+/* Geral */
+button {
+    --btn-height: var(--vspace-btn);
+
+    display: inline-block;
+    height: var(--btn-height);
+    line-height: calc(var(--btn-height) - 0.4rem);
+    padding: 0 3.2rem;
+    margin: 0 0.4rem 1.6rem 0;
+
+    font-family: var(--font-1);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+
+    color: var(--color-btn-text);
+    background-color: var(--color-btn);
+    border: 0.2rem solid var(--color-btn);
+
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s ease-in-out;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button:hover {
+    background-color: var(--color-btn-hover);
+    border-color: var(--color-btn-hover);
+    color: var(--color-btn-hover-text);
+    outline: 0;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* Modificadores de Estilo */
+
+.btn-primary {
+    background: var(--color-btn-primary);
+    border-color: var(--color-btn-primary);
+    color: var(--color-btn-primary-text);
+}
+.btn-primary:hover {
+    background: var(--color-btn-primary-hover);
+    border-color: var(--color-btn-primary-hover);
+    color: var(--color-btn-primary-hover-text);
+}
+
+.btn-stroke {
+    background: transparent;
+    border: 0.2rem solid var(--color-btn-stroke);
+    color: var(--color-btn-stroke-text);
+}
+.btn-stroke:hover {
+    background: var(--color-btn-stroke-hover);
+    border: 0.2rem solid var(--color-btn-stroke-hover);
+    color: var(--color-btn-stroke-hover-text);
+}
+
+.btn-stroke-primary {
+    background: transparent;
+    border: 0.2rem solid var(--color-1);
+    color: var(--color-1);
+}
+
+/* Modificadores de Layout */
+.h-full-width {
+    width: 100%;
+    margin-right: 0;
+}
+
+/* Modificadores de Tamanho */
+.btn-small {
+    --btn-height: calc(var(--vspace-btn) - 1.6rem);
+}
+
+.btn-medium {
+    --btn-height: calc(var(--vspace-btn) + .8rem);
+}
+
+.btn-large {
+    --btn-height: calc(var(--vspace-btn) + 1.6rem);
+}
+
+/* Modificadores de Forma */
+.btn-pill {
+    padding-left: 3.2rem;
+    padding-right: 3.2rem;
+    border-radius: 1000px;
+}
+</style>

@@ -1,0 +1,18 @@
+---
+import '@styles/global.css';
+import { PublicationsLayout } from '@layouts';
+
+import { publications } from '@db';
+
+/**
+ * Página de exibição das publicações científicas do grupo de pesquisa.
+ * 
+ * @remarks
+ * Os dados das publicações são obtidos da base de dados.
+ */
+---
+
+<PublicationsLayout
+	publications={publications}/>
+
+<!-- =============================================================================================== -->

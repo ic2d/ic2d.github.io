@@ -1,0 +1,211 @@
+---
+import '@styles/global.css';
+import { Button, Alert } from '@components/ui';
+
+/**
+ * Componente que representa o formulário de contato com o grupo de pesquisa.
+ * 
+ * TODO: Configurar o endpoint de envio do formulário.
+ */
+---
+
+<div class="row" id="alert-site"><Alert/></div>
+<div class="row contact-form">
+    <form name="contactForm" id="contactForm" autocomplete="off" action="" method="POST">
+        <fieldset>
+            
+            <div class="form-field">
+                <label for="name">Nome</label>
+                <input name="name" id="name" class="h-full-width h-remove-bottom" 
+                    value=""
+                    type="text" 
+                    required
+                    maxlength="128">
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input name="email" id="email" class="h-full-width h-remove-bottom" 
+                    value="" 
+                    type="email" 
+                    required 
+                    maxlength="128">
+            </div>
+
+            <div class="form-field">
+                <label for="topic">Assunto</label>
+                <input name="topic" id="topic" class="h-full-width h-remove-bottom" 
+                    value="" 
+                    type="text" 
+                    required
+                    maxlength="128">
+            </div>
+
+            <div class="form-field">
+                <label for="message">Mensagem</label>
+                <textarea name="message" id="message" class="h-full-width h-remove-bottom" 
+                    required
+                    maxlength="4096"></textarea>
+
+                <input id="last_name" name="last_name" type="text" autocomplete="off" aria-hidden="true" tabindex="-1"
+                    value=""
+                    maxlength="64">
+            </div>
+
+            <Button id="cancel" type="reset" class="btn-stroke-primary">Limpar</Button>
+            <Button id="submit" type="submit" class="btn-primary">Enviar Mensagem</Button>
+        </fieldset>
+    </form>
+
+</div>
+
+<!-- =============================================================================================== -->
+
+<script>
+import DOMPurify from 'dompurify';
+/* Procura o alerta e campo de alertas */
+const contact_form = document.querySelector("#contactForm") as HTMLFormElement;
+const alert_site = document.querySelector('#alert-site') as HTMLDivElement;
+
+/* Configura o comportamento de submit do formulário */
+contact_form.addEventListener("submit",(e) =>{
+    const last_name = contact_form.querySelector('#last_name') as HTMLInputElement;
+    e.preventDefault();
+    if(last_name.value.trim() !== ''){
+        const alert_box = document.createElement('alert-box');
+        /**
+         * Honeypot: bloqueia o envio do formulário de contato se o campo
+         * last_name for preenchido. Apresentando a mensagem de sucesso mesmo assim.
+         * Ajuda a prevenir envios automáticos de bots.
+         */
+        alert_box.innerHTML = `
+        <div class="alert success">
+        <span class="closebtn">&times;</span>
+        <span>Mensagem enviada.</span><br/>
+        <span>Assim que possível entraremos em contato!</span>
+        </div>
+        `;
+        alert_site.appendChild(alert_box);
+        contact_form.reset();
+    }else{
+        // Captura todos os campos do form
+        const formData: FormData = new FormData(contact_form);
+        const payload: Record<string, string> = {};
+
+        // Sanitiza todos os campos, exceto last_name
+        for (const [name, value] of formData.entries()) {
+            if (name === 'last_name') continue; // ignora honeypot
+            payload[name] = DOMPurify.sanitize(value.toString());
+        }// for
+
+        // Envia o formulário
+        send_form(payload);
+    }// if last_name
+});
+
+/**
+ * Envia os dados do formulário de contato para o endpoint remoto via POST.
+ *
+ * @param payload - Objeto contendo os dados do formulário já sanitizados.
+ *
+ * Observações:
+ * - Exibe mensagem de sucesso ou erro ao usuário conforme resposta do servidor.
+ * - Reseta o formulário após o envio.
+ */
+async function send_form(payload: Record<string, string>){
+    const alert_box = document.createElement('alert-box');
+    try {
+        // console.log(payload);
+        // Envia POST para endpoint remoto
+        const response = await fetch('https://formsubmit.co/0b000ddc016a4de29e25874f67223cfc', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+            alert_box.innerHTML = `
+            <div class="alert success">
+            <span class="closebtn">&times;</span>
+            <span>Mensagem enviada.</span><br/>
+            <span>Assim que possível entraremos em contato!</span>
+            </div>
+            `;
+        } else {
+            alert_box.innerHTML = `
+            <div class="alert">
+            <span class="closebtn">&times;</span>
+            <span>Falha ao enviar a mensagem. Tente novamente mais tarde.</span>
+            </div>
+            `;
+        }// if-else
+    } catch (error) {
+        console.error(error);
+        alert_box.innerHTML = `
+        <div class="alert error">
+        <span class="closebtn">&times;</span>
+        <span>Erro de conexão. Tente novamente mais tarde.</span>
+        </div>
+        `;
+    }// try-catch
+    alert_site.appendChild(alert_box);
+    contact_form.reset();
+}// send_form
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+/** HoneyPot */
+#last_name{
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Geral */
+.contact-form form, textarea{
+    max-width: fit-content;
+    min-width: 100%;
+    min-height: fit-content;
+    width: 100%;
+    border-width: 0;
+    overflow: hidden;
+}
+
+.contact-form form .btn {
+    margin-top: var(--vspace-1);
+}
+
+fieldset{
+    border-width: 0;
+}
+
+/* Campos do Formulário */
+.form-field input, textarea{
+    border-width: 0px 0px 2px 0px;
+    border-color: var(--color-text);
+    color: var(--color-text-light);
+    font-size: var(--text-size);
+    background-color: transparent;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.form-field input:focus-visible, textarea:focus-visible{
+    outline: none;
+    border-color: var(--color-1);
+}
+
+.form-field{
+    margin: 0px 0px 25px 0px;
+}
+
+.form-field label{
+    transition: color 0.3s ease-in-out;
+}
+
+.form-field:focus-within label{
+    color: var(--color-1);
+}
+</style>

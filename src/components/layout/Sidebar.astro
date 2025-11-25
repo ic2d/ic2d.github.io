@@ -1,0 +1,89 @@
+---
+import '@styles/global.css';
+
+/**
+ * Componente representativo de uma barra lateral, usada como menu lateral.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.title] - O título a ser exibido na barra lateral.
+ * 
+ * @remarks
+ * A configuração de estilo da barra lateral possui apenas suporte para listas não ordenadas.
+ * Para listas ordenadas, ou outros tipos de conteúdo, é necessário implementar/adaptar o estilo.
+ */
+interface Props{
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<menu class="sidebar">
+    <hgroup>
+        <h5>{title}</h5>
+    </hgroup>
+    <slot/>
+</menu>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.sidebar{
+    border: 1px solid var(--color-1-dark);
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px var(--color-1-darker);
+    margin-left: 10px;
+    padding: 15px 20px 15px 20px;
+    height: min-content;
+    width: var(--width-full);
+    background-color: var(--color-dark-bg);
+}
+
+/* Cabeçalho */
+.sidebar :global(hgroup h5){
+    color: var(--color-1-dark);
+    margin: 0 0 25px 0;
+}
+
+/* Ítens da Sidebar */
+.sidebar :global(ul){
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar :global(li){
+    color: var(--color-text-light);
+    font-size: var(--text-sm);
+    border-style: solid;
+    border-color: var(--color-text);
+    border-width: 0 0 1px 0;
+    padding: 10px 0 10px 0;
+    list-style-type: none;
+}
+
+.sidebar :global(li.last){
+    border-width: 0;
+    padding-bottom: 0;
+}
+
+/* Links na Sidebar */
+.sidebar :global(a){
+    color: var(--color-text-light);
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar :global(a.active){
+    color: var(--color-1-dark);
+}
+
+.sidebar :global(a:hover){
+    color: var(--color-1-dark);
+}
+
+/* Responsividade */
+@media screen and (max-width: 800px) {
+    .sidebar{
+        margin: 0;
+    }
+}
+</style>

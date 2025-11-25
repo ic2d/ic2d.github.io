@@ -1,0 +1,70 @@
+---
+import '@styles/global.css';
+
+import type { Publication } from '@scripts/interfaces';
+import { get_MM_YYYY_string } from '@scripts/utils';
+import ResearchAreaIcon from '@components/ui/ResearchAreaIcon.astro';
+
+/**
+ * Componente para exibir uma publicação individual.
+ * Mostra o título como um link clicável, ícones das áreas de pesquisa e os detalhes da publicação.
+ * A URL do link é escolhida com base na disponibilidade de DOI, Google Scholar ou link externo.
+ * @param {Object} props - Propriedades do componente.
+ * @param {Publication} props.publication - Objeto de publicação a ser exibido.
+ */
+interface Props{
+    publication: Publication;
+}
+
+const { publication } = Astro.props;
+
+/**
+ * Escolhe a URL a ser associada a publicação por ordem de importância
+ * Ordem: DOI > Google Scholar > Link Externo
+ */
+let url;
+if (publication.doi){
+    url = "https:\\\\www.doi.org\\" + publication.doi;
+}else if (publication.gs_url){
+    url = publication.gs_url;
+}else{
+    url = publication.url;
+}// if-else
+
+/* Formata a data de publicação para o formato "Mês de YYYY" */
+const date_str = get_MM_YYYY_string(publication.pub_date);
+---
+
+<article class="publication">
+    <a href={url} target="_blank" title={publication.title} aria-label={publication.title} rel="noopener noreferrer">
+        {publication.title}
+    </a>
+    <div style="margin-top: 7px;">
+        {publication.research_areas.map(ra=>(
+            <ResearchAreaIcon name={ra} label_hide/>
+        ))}
+    </div>
+    
+    <p><small>
+        {publication.authors.join(', ')}<br> 
+        <i>{publication.publication_medium} - {date_str}</i>   
+    </small></p>
+</article>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.publication{
+    width: var(--width-full);
+}
+
+/* Texto */
+.publication p{
+    color: var(--color-text-light);
+}
+
+.publication i{
+    color: var(--color-text);
+}
+</style>

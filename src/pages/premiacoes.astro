@@ -1,0 +1,75 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+
+import { annual_awards } from '@assets/db';
+
+/**
+ * Página de exibição das premiações conquistadas pelos membros do grupo de pesquisa.
+ * 
+ * @remarks
+ * Os dados das premiações são obtidos da base de dados.
+ */
+---
+
+<BaseLayout subtitle='Premiações'>
+	<Header/>
+	
+	<PageHeader title='Premiações'>
+		<p>
+			Conheça todas as premiações, reconhecimentos e méritos alcançados pelos membros do grupo de 
+			pesquisa ao longo dos anos.
+		</p>
+	</PageHeader>
+	
+	<div class="row awards">
+	<!-- Renderização automática da lista de premiações agrupadas por ano -->
+	{annual_awards.map(item=>(
+		<h4>{item.year}</h4>
+		<ul> 
+			{item.awards.map(award=>( // Renderização automática das premiações do ano
+				<li>
+					<p>
+						{award.description} <br/>
+						<em>{award.members.join(', ')}</em>
+					</p>
+				</li>
+			))}
+		</ul>
+	))}
+	</div>
+
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->
+ 
+<style>
+/* Geral */
+.awards{
+	margin-top: var(--vspace-1_25);
+}
+
+/* Listas - Geral */
+.awards ul{
+	margin-bottom: var(--vspace-0_25);
+}
+
+/* Listas - Cabeçalho */
+.awards h4{
+	color: var(--color-1-dark);
+	width: var(--width-full);
+	padding: 0;
+	margin: 0 0 var(--vspace-0_5) 0;
+}
+
+/* Listas - Texto */
+.awards li p{
+	color: var(--color-text-light);
+}
+
+.awards li p em{
+	color: var(--color-gray-6);
+}
+</style>

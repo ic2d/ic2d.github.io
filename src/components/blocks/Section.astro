@@ -1,0 +1,61 @@
+---
+import "@styles/global.css";
+import { SectionHead } from "@components/blocks";
+
+/**
+ * Componente que representa uma seção de uma página, podendo incluir um cabeçalho opcional.
+ * @param {Object} props - As propriedades do componente.
+ * @param {string} [props.title] - O título da seção (opcional).
+ * @param {string} [props.subtitle] - O subtítulo da seção (opcional).
+ * @param {string} [props.lead] - Um texto introdutório ou lead para a seção (opcional).
+ * @param {string} [props.class] - Classes CSS adicionais para estilização personalizada (opcional).
+ */
+interface Props{
+    title?: string;
+    subtitle?: string;
+    lead?: string;
+    class?: string;
+}
+
+const { title = "", subtitle = "", lead = "", class: externalClass = "" } = Astro.props;
+---
+
+<section class={`row section ${externalClass}`}>
+    <!-- Renderização condicional do cabeçalho da seção -->
+    {title ?
+        <SectionHead
+            title={title}
+            subtitle={subtitle}
+            lead={lead}
+        />
+        :
+        null
+    }
+    
+    <slot/>
+
+</section>
+
+<!-- =============================================================================================== -->
+
+<style>
+/* Geral */
+.section {
+    background-color: var(--color-white-bg);
+    padding-top: 0;
+    padding-bottom: var(--vspace-0_25);
+}
+
+.section.s-dark{
+    background-color: var(--color-dark-bg);
+}
+
+/* Cabeçalho */
+.section .section-head {
+    margin-bottom: var(--vspace-0_5);
+}
+
+.section.s-dark :global(p){
+    color: var(--color-text-light);
+}
+</style>

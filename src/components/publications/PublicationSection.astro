@@ -1,0 +1,36 @@
+---
+import '@styles/global.css';
+import { Section } from '@components/blocks';
+import { TopPubsView, HiddenPubs } from '@components/publications';
+
+import type { Publication as PublicationType } from '@scripts/interfaces';
+
+/**
+ * Componente para exibir uma seção de publicações.
+ * Mostra um título e uma lista de publicações, mantendo as 10 mais recentes visíveis e 
+ * ocultas as demais, caso haja.
+ * @param {Object} props - Propriedades do componente.
+ * @param {string} [props.title] - Título da seção de publicações.
+ * @param {string} [props.class] - Classe CSS adicional para estilização externa.
+ * @param {PublicationType[]} [props.publications] - Array de publicações a serem exibidas.
+ */
+interface Props{
+    title: string;
+    class: string;
+    publications: PublicationType[];
+}
+
+const{ title, class:externalClass = "", publications } = Astro.props;
+---
+
+<Section title={title} class={externalClass}>
+    <div class="s-publications" data-title={title}>
+    <!-- Renderização condicional dos campos de publicações na seção -->
+    {publications.length > 10 ?
+        <TopPubsView publications={publications.slice(0,10)}/>
+        <HiddenPubs publications={publications.slice(10)}/> 
+        :
+        <TopPubsView publications={publications}/>
+    }
+    </div>
+</Section>

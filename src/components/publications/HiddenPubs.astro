@@ -1,0 +1,42 @@
+---
+import '@styles/global.css';
+import { Publication } from '@components/publications';
+
+import type { Publication as PublicationType } from '@scripts/interfaces';
+
+/**
+ * Componente para agrupar publicações ocultas em um elemento <details>.
+ * Exibe um resumo que, ao ser clicado, revela as publicações ocultas.
+ * Usado para evitar sobrecarregar a página com muitas publicações.
+ * @param {Object} props - Propriedades do componente.
+ * @param {PublicationType[]} props.publications - Array de publicações a serem ocultadas.
+ */
+interface Props{
+    publications: PublicationType[];
+}
+
+const { publications } = Astro.props;
+
+let summary = `Mostrar mais ${publications.length}`;
+---
+
+<details>
+    <summary>{summary}</summary>
+    <!-- Renderização automática das publicações ocultas -->
+    {publications.map(pub=>(<Publication publication={pub}/>))}
+</details>
+
+<!-- =============================================================================================== -->
+
+<style>
+summary{
+    color: var(--color-3);
+    margin-bottom: var(--vspace-0_5);
+    transition: color 0.2s ease-in-out;
+}
+
+summary:hover{
+    color: var(--color-2);
+    cursor: pointer;	
+}	
+</style>

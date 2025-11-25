@@ -1,0 +1,26 @@
+---
+import '@styles/global.css';
+import { BaseLayout } from '@layouts';
+import { Header, Footer, PageHeader } from '@components/layout';
+import { ContactForm } from '@components/blocks';
+
+/**
+ * Página contendo as informações e formulário para entrar em contato com o grupo de pesquisa.
+ */
+---
+
+<BaseLayout subtitle='Contato'>
+	<Header/>
+
+	<PageHeader title="Contato">
+        <p>
+            Envie-nos uma mensagem que entraremos em contato!
+        </p>
+    </PageHeader>
+
+    <ContactForm/>
+
+	<Footer/>
+</BaseLayout>
+
+<!-- =============================================================================================== -->

@@ -1,0 +1,22 @@
+---
+import '@styles/global.css';
+import { Publication } from '@components/publications';
+
+import type { Publication as PublicationType } from '@scripts/interfaces';
+
+/**
+ * Componente para agrupar 10 publicações mais recentes do grupo de pesquisa.
+ * @param {Object} props - Propriedades do componente.
+ * @param {PublicationType[]} props.publications - Array de publicações a serem ocultadas.
+ */
+interface Props{
+    publications: PublicationType[];
+}
+
+const { publications } = Astro.props;
+---
+
+<div class="top-pubs">
+    <!-- Renderização automática das 10 publicações -->
+    {publications.map(pub=>(<Publication publication={pub}/>))}
+</div>

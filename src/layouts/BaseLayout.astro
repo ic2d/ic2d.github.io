@@ -1,0 +1,31 @@
+---
+import "@styles/global.css";
+
+/**
+ * Layout base para todas as páginas do site.
+ * Define a estrutura HTML básica, incluindo o cabeçalho e o corpo.
+ * @param {Object} props - Propriedades passadas para o layout.
+ * @param {string} [props.subtitle] - Subtítulo opcional para a página
+ */
+interface Props {
+	subtitle?: string;
+}
+
+const { subtitle } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="generator" content={Astro.generator} />
+		<!-- Renderização condicional do subtítulo junto ao título -->
+		<title>{`iC2D${subtitle ? ' - ' + subtitle : ''}`}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

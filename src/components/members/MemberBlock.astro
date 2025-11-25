@@ -1,0 +1,56 @@
+---
+import "@styles/global.css";
+
+/**
+ * Componente para uma seção de exibição dos mebros, configurando o estilo de exibição e responsividade.
+ * @remarks
+ * Os membros são passados como filhos desse componente, sendo esperado componentes `Member`.
+ * Os membros são exibidos em uma grade, alinhados ao centro.
+ */
+---
+
+<div class="row row-x-center block-500-stack team-block">
+    <slot/>
+</div>
+
+<!-- =============================================================================================== -->
+
+<script>
+const team_blocks = document.querySelectorAll('.team-block') as NodeListOf<HTMLElement>;
+
+/**
+ * Aplica classes dinâmicas ao elemento `MemberBlock` com base na quantidade de membros (elementos filhos),
+ * ajustando a exibição dos componentes `Member` para não haver distorção quando há poucos membros.
+ * 
+ * - Para 1 membro: adiciona classes para ocupar toda a largura.
+ * - Para 2 membros: adiciona classes para dividir em duas colunas.
+ * - Para 3 membros: adiciona classes para dividir em três colunas (exceto em tablets, que divide em duas).
+ * - Para 4 ou mais membros: adiciona classes para dividir em cinco colunas (em telas grandes), três colunas (médias) e duas colunas (tablets).
+ * 
+ * @param team_block - Elemento HTML que representa o bloco do time, contendo os membros como filhos.
+ */
+function apply_team_block_dynamic_classes(team_block: HTMLElement){
+    const num_members = team_block.childElementCount;
+    const class_map = [
+        { max: 1, classes: ['block-large-full', 'block-medium-full', 'block-tab-full'] },
+        { max: 2, classes: ['block-large-1-2', 'block-medium-1-2', 'block-tab-1-2'] },
+        { max: 3, classes: ['block-large-1-3', 'block-medium-1-3', 'block-tab-1-2'] },
+        { max: Infinity, classes: ['block-large-1-5', 'block-medium-1-3', 'block-tab-1-2'] }
+    ];
+
+    const classes = class_map.find(item => (num_members <= item.max))?.classes || [];
+    team_block.classList.add(...classes);
+}// apply_team_block_dynamic_classes
+
+team_blocks.forEach(tb=>apply_team_block_dynamic_classes(tb));
+</script>
+
+<!-- =============================================================================================== -->
+
+<style>
+.team-block {
+    width: var(--width-full);
+    margin: var(--vspace-1) 0px var(--vspace-1) 0px;
+    gap: 25px;
+}
+</style>
