@@ -90,15 +90,10 @@ Agora basta continuar desenvolvendo, simples assim!
 
 ## 🚀 Deploy
 
-O projeto desenvolvido é voltado para um site estático. Nesse sentido, com o ambiente [configurado](#️-configuração), o deploy consiste em:
+O projeto desenvolvido é voltado para um site estático. Para o deploy do site, foi configurado uma ação do GitHub Actions que realiza o processo de construção e implantação da nova versão de forma automática. Desse modo, basta:
 
-1. Gerar os arquivos estáticos através do comando:
-```bash
-npm run build
-```
-2. Pegar os arquivos estáticos gerados em `./dist` e disponibilizá-los através de um servidor de arquivos ou substituir os arquivos atuais no servidor pelos novos.
-
-> Um servidor poderia ser, por exemplo, o GitHub Pages.
+1. Realizar um `commit` com as novas informações e alterações no site.
+2. Verificar na seção `Actions` se o fluxo de construção e implantação da nova versão ocorreu sem problemas.
 
 ## 🙋‍♂️ Contribuindo
 
