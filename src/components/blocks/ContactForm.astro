@@ -13,7 +13,8 @@ import { Button, Alert } from '@components/ui';
 <div class="row contact-form">
     <form name="contactForm" id="contactForm" autocomplete="off" action="" method="POST">
         <fieldset>
-            
+            <input type="hidden" name="_captcha" value="false">
+
             <div class="form-field">
                 <label for="name">Nome</label>
                 <input name="name" id="name" class="h-full-width h-remove-bottom" 
